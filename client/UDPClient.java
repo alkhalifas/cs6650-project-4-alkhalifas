@@ -4,8 +4,13 @@ import java.net.DatagramSocket;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.io.IOException;
+import java.net.SocketTimeoutException;
 
 public class UDPClient extends AbstractClient {
+
+    // Adding timeout
+    private static final int TIMEOUT_MS = 5000;
+
     public UDPClient(String hostname, int port) {
         super(hostname, port);
     }
@@ -13,6 +18,9 @@ public class UDPClient extends AbstractClient {
     @Override
     public void sendRequest(String request) {
         try (DatagramSocket socket = new DatagramSocket()) {
+
+            // Setting the timeout
+            socket.setSoTimeout(TIMEOUT_MS);
 
             // Method to send data
             byte[] sendData = request.getBytes();
@@ -22,20 +30,22 @@ public class UDPClient extends AbstractClient {
 
             // Create the dDatagramPacket
             // https://docs.oracle.com/javase/8/docs/api/java/net/DatagramPacket.html
-            DatagramPacket packet = new DatagramPacket(sendData, sendData.length, address, port);
-            socket.send(packet);
+            DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, address, port);
+            socket.send(sendPacket);
 
-            // Prepare buffer
-            byte[] buffer = new byte[1024];
+            // Prepare receiveData, buffer
+            byte[] receiveData = new byte[1024];
 
-            // Get response packet
-            DatagramPacket responsePacket = new DatagramPacket(buffer, buffer.length);
-            socket.receive(responsePacket);
-            String response = new String(responsePacket.getData(), 0, responsePacket.getLength());
+            // Get receive packet
+            DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
 
-            // print response
-            // todo: add to logger later
-            System.out.println("Response: " + response);
+            try {
+                socket.receive(receivePacket);
+                String response = new String(receivePacket.getData(), 0, receivePacket.getLength());
+                System.out.println("Response: " + response);
+            } catch (SocketTimeoutException e) {
+                System.out.println("Timeout occurred: Server is unresponsive. Please try again.");
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
