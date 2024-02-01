@@ -1,6 +1,7 @@
 package client;
 
 import java.net.Socket;
+import java.net.SocketTimeoutException;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
@@ -32,27 +33,26 @@ public class TCPClient extends AbstractClient {
     public void sendRequest(String request) {
 
         // Connect to a socket using the hostname and port
-        try (Socket socket = new Socket(hostname, port);
+        try (Socket socket = new Socket(hostname, port)) {
 
-             // Set timeout using setSoTimeout()
-             socket.setSoTimeout(TIMEOUT_MS);
+            // Set timeout using setSoTimeout()
+            socket.setSoTimeout(TIMEOUT_MS);
 
-             // Set PrintWriter for getting the output response from the server
-             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+            // Set PrintWriter for getting the output response from the server
+            PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
 
-             // Set BufferedReader for handling the input data
-             // https://docs.oracle.com/javase/8/docs/api/java/io/InputStreamReader.html
-             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
-//            BufferedReader in = new BufferedReader(new InputStreamReader(socket))) {
+            // Set BufferedReader for handling the input data
+            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
-            // Make call
+            // Make call with 'out...'
             out.println(request);
 
             try {
                 String response = in.readLine();
                 System.out.println("Response: " + response);
             } catch (SocketTimeoutException e) {
-                System.out.println("Timeout occurred: Server is unresponsive. Plese try again.");
+                //todo: add logger later
+                System.out.println("Timeout occurred: Server is unresponsive. Please try again.");
             }
 
         } catch (IOException e) {
