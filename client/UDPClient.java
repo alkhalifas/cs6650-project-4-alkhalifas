@@ -12,6 +12,10 @@ public class UDPClient extends AbstractClient {
 
     @Override
     public void sendRequest(String request) {
+        try (DatagramSocket socket = new DatagramSocket()) {
 
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
