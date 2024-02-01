@@ -30,6 +30,10 @@ public class ClientApp {
         // Check if TCP
         if ("tcp".equalsIgnoreCase(protocol)) {
             client = new TCPClient(hostname, port);
+        } else if ("udp".equalsIgnoreCase(protocol)) {
+
+            // Check if UDP
+            client = new UDPClient(hostname, port);
         } else {
 
             // Client-side error handlign for bad protocol
