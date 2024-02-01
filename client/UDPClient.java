@@ -10,4 +10,8 @@ public class UDPClient extends AbstractClient {
         super(hostname, port);
     }
 
+    @Override
+    public void sendRequest(String request) {
+
+    }
 }
