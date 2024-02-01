@@ -7,11 +7,11 @@
 - [X] Client TCP: Create functional client that can make calls via TCP
 - [X] Client UDP: Create functional client that can make calls via UDP
 - [X] Server TCP: Create functional server that can make calls via TCP
-- [ ] Server UDP: Create functional server that can make calls via UDP
+- [X] Server UDP: Create functional server that can make calls via UDP
 - [ ] Be configurable such that you can dictate that client and server communicate using TCP/UDP
 - [ ] Comment your code and appropriately split the project into multiple functions and/or classes
-- [ ] Client to take the hostname or IP address of the server (it must accept either)
-- [ ] Client to take the port number of the server
+- [X] Client to take the hostname or IP address of the server (it must accept either)
+- [X] Client to take the port number of the server
 - [ ] The client should be robust to server failure by using a timeout mechanism to deal with an unresponsive server
 - [ ] If it does not receive a response to a particular request, you should note it in a client log and send the remaining requests
 - [ ] You will have to design a simple protocol to communicate packet contents for the three request types
@@ -39,3 +39,17 @@ Run the Server:
 
     java server.ServerApp 1111 5555
 
+Run the Client:
+
+    java client.ClientApp localhost 1111 tcp
+    java client.ClientApp localhost 5555 udp
+
+
+### Questions for TA:
+
+1. Am I passing the 'hostname' correctly?
+2. What is the best way to handle both TCP and UDP?
+3. Can I assume that the server cannot 'set' the hostname or IP? When you deploy this, 
+it should be default live on a server with an already assigned IP address.
+4. How do I handle both TCP and UDP on ClientApp?
+5. Do I need Docker? I see conflicting information.
