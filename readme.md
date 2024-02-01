@@ -5,7 +5,7 @@
 - [X] Create a Hash Map could be used for setting up Key value stores.
 - [X] Hashmap persists in memory
 - [X] Client TCP: Create functional client that can make calls via TCP
-- [ ] Client UDP: Create functional client that can make calls via UDP
+- [X] Client UDP: Create functional client that can make calls via UDP
 - [X] Server TCP: Create functional server that can make calls via TCP
 - [ ] Server UDP: Create functional server that can make calls via UDP
 - [ ] Be configurable such that you can dictate that client and server communicate using TCP/UDP
