@@ -8,8 +8,8 @@
 - [X] Client UDP: Create functional client that can make calls via UDP
 - [X] Server TCP: Create functional server that can make calls via TCP
 - [X] Server UDP: Create functional server that can make calls via UDP
-- [ ] Be configurable such that you can dictate that client and server communicate using TCP/UDP
-- [ ] Comment your code and appropriately split the project into multiple functions and/or classes
+- [X] Be configurable such that you can dictate that client and server communicate using TCP/UDP
+- [X] Comment your code and appropriately split the project into multiple functions and/or classes
 - [X] Client to take the hostname or IP address of the server (it must accept either)
 - [X] Client to take the port number of the server
 - [ ] The client should be robust to server failure by using a timeout mechanism to deal with an unresponsive server
@@ -43,7 +43,6 @@ Run the Client:
 
     java client.ClientApp localhost 1111 tcp
     java client.ClientApp localhost 5555 udp
-
 
 ### Questions for TA:
 
