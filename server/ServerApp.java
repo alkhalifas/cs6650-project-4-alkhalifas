@@ -19,8 +19,9 @@ public class ServerApp {
             System.exit(1);
         }
 
-        // Get the port
+        // Get the ports
         int tcpPort = Integer.parseInt(args[0]);
+        int udpPort = Integer.parseInt(args[1]);
 
         // Start serverSocket
         // https://docs.oracle.com/javase/8/docs/api/java/net/ServerSocket.html
