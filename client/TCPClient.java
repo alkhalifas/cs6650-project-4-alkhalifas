@@ -48,11 +48,13 @@ public class TCPClient extends AbstractClient {
             out.println(request);
 
             try {
+                // Logger with response
                 String response = in.readLine();
-                System.out.println("Response: " + response);
+                ClientLogger.log("TCPClient: Response: " + response);
             } catch (SocketTimeoutException e) {
-                //todo: add logger later
-                System.out.println("Timeout occurred: Server is unresponsive. Please try again.");
+
+                //Logger with error message
+                ClientLogger.log("Timeout occurred: Server is unresponsive: " + e);
             }
 
         } catch (IOException e) {
