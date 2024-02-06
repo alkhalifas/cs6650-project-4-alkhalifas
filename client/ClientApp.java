@@ -12,13 +12,13 @@ public class ClientApp {
      */
     public static void main(String[] args) {
 
-        ClientLogger.log("Starting Client Application");
+        ClientLogger.log("Alert - Starting Client Application");
 
         // Make sure enough arguments exist (address, port, protocol
         if (args.length != 3) {
 
             // Error handling
-            ClientLogger.log("Error. Usage: java client.ClientApp <hostname> <port> <protocol> (java client.ClientApp localhost 1234 tcp)");
+            ClientLogger.log("Error - Usage: java client.ClientApp <hostname> <port> <protocol> (java client.ClientApp localhost 1234 tcp)");
             System.exit(1);
         }
 
@@ -49,7 +49,7 @@ public class ClientApp {
             // Client-side error handlign for bad protocol
             // Logger -> write to file .txt
             // https://docs.oracle.com/javase%2F7%2Fdocs%2Fapi%2F%2F/java/util/logging/Logger.html
-            ClientLogger.log("Error: Unsupported protocol: " + protocol);
+            ClientLogger.log("Error - Unsupported protocol: " + protocol);
             return;
         }
 

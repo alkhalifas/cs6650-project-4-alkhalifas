@@ -17,7 +17,7 @@ public class ServerApp {
 
         // Check for insufficient or missing arguments
         if (args.length != 2) {
-            System.out.println("Usage: java server.ServerApp <tcp-port> <udp-port>");
+            ServerLogger.log("Error - Usage: java server.ServerApp <tcp-port> <udp-port>");
             System.exit(1);
         }
 
@@ -29,8 +29,8 @@ public class ServerApp {
         // https://docs.oracle.com/javase/8/docs/api/java/net/ServerSocket.html
         ServerSocket tcpServerSocket = new ServerSocket(tcpPort);
         DatagramSocket udpServerSocket = new DatagramSocket(udpPort);
-        System.out.println("TCP Server is running on port " + tcpPort);
-        System.out.println("UDP Server is running on port " + udpPort);
+        ServerLogger.log("TCP Server is running on port " + tcpPort);
+        ServerLogger.log("UDP Server is running on port " + udpPort);
 
         // Instantiate the KV database / datastore
         KeyValue store = new KeyValue();

@@ -42,19 +42,19 @@ public class TCPHandler implements Runnable {
                     // PUT
                     case "PUT":
                         store.put(tokens[1], tokens[2]);
-                        response = "OK";
+                        response = "200";
                         break;
 
                     // GET
                     case "GET":
                         String value = store.get(tokens[1]);
-                        response = value != null ? value : "NOT FOUND";
+                        response = value != null ? value : "404 NOT FOUND";
                         break;
 
                     // DLETE
                     case "DELETE":
                         store.delete(tokens[1]);
-                        response = "OK";
+                        response = "200";
                         break;
 
                     //Error handler to give user feedback, per specification
@@ -62,6 +62,9 @@ public class TCPHandler implements Runnable {
                         response = "ERROR: Invalid Key. Please use GET/PUT/DELETE";
                 }
                 // print the response // todo: add logger later
+                ServerLogger.log("TCP Server - Incoming Request: " + response);
+
+                // Send back response
                 out.println(response);
             }
             clientSocket.close();
