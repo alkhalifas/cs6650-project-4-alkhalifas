@@ -49,7 +49,7 @@ public class ClientApp {
             // Client-side error handlign for bad protocol
             // Logger -> write to file .txt
             // https://docs.oracle.com/javase%2F7%2Fdocs%2Fapi%2F%2F/java/util/logging/Logger.html
-            System.out.println("Unsupported protocol: " + protocol);
+            ClientLogger.log("Error: Unsupported protocol: " + protocol);
             return;
         }
 
