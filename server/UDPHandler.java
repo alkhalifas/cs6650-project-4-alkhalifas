@@ -34,23 +34,26 @@ public class UDPHandler implements Runnable {
                 //PUT
                 case "PUT":
                     store.put(tokens[1], tokens[2]);
-                    response = "OK";
+                    response = "200";
                     break;
 
                 // GET
                 case "GET":
                     String value = store.get(tokens[1]);
-                    response = value != null ? value : "NOT FOUND";
+                    response = value != null ? value : "404 NOT FOUND";
                     break;
 
                 // DELETTE
                 case "DELETE":
                     store.delete(tokens[1]);
-                    response = "OK";
+                    response = "200";
                     break;
                 default:
                     response = "ERROR Please make me into a logger and dont forget";
             }
+
+            ServerLogger.log("UDP Server - Incoming Request: " + response);
+
 
             // response handling
             byte[] responseData = response.getBytes();

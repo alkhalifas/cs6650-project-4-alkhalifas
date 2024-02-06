@@ -14,15 +14,15 @@
 - [X] Client to take the port number of the server
 - [X] The client should be robust to server failure by using a timeout mechanism to deal with an unresponsive server
 - [ ] If it does not receive a response to a particular request, you should note it in a client log and send the remaining requests
-- [ ] You will have to design a simple protocol to communicate packet contents for the three request types
+- [X] You will have to design a simple protocol to communicate packet contents for the three request types
 - [ ] The client must be robust to malformed or unrequested datagram packets
-- [ ] Every line the client prints to the client log should be time-stamped with the current system time
+- [X] Every line the client prints to the client log should be time-stamped with the current system time
 - [ ] The server must take the following command line arguments: address, port
 - [X] The server should run forever
-- [ ] The server must display the requests received, and its responses
+- [X] The server must display the requests received, and its responses
 - [ ] explicitly print to the server log that it received a query from a particular InetAddress and port number for a specific word
 - [ ] should report it in a human-readable way
-- [ ] You must have two instances of your server (or two separate servers)
+- [X] You must have two instances of your server (or two separate servers)
 - [ ] You should use your client to pre-populate the Key-Value store with data and a set of keys.
 - [ ] Once the key-value store is populated, your client must do at least five of each operation: 5 PUTs, 5 GETs, 5 DELETEs.
 - [ ] Part of your completed assignment submission should be an executive summary containing an “Assignment overview”

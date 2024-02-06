@@ -54,18 +54,29 @@ public class ClientApp {
         }
 
         // Examples of PUT
-        client.sendRequest("PUT key1 value1");
-        client.sendRequest("PUT movie alladin");
-        client.sendRequest("PUT show seinfeld");
+        client.sendRequest("PUT firstname saleh");
+        client.sendRequest("PUT lastname alkhalifa");
+        client.sendRequest("PUT tvshow seinfeld");
         client.sendRequest("PUT zipcode 02148");
+        client.sendRequest("PUT job datascientist");
 
         // Examples of GET
-        client.sendRequest("GET movie");
-        client.sendRequest("GET show");
-        client.sendRequest("GET zipcode");
+        client.sendRequest("GET firstname");
+        client.sendRequest("GET lastname");
+        client.sendRequest("GET job");
+        client.sendRequest("GET datascientist");
+        client.sendRequest("GET car");
 
         // Examples of DELETE
-        client.sendRequest("DELETE key1");
-        client.sendRequest("DELETE movie");
+        client.sendRequest("DELETE firstname");
+        client.sendRequest("DELETE lastname");
+        client.sendRequest("DELETE tvshow");
+        client.sendRequest("DELETE zipcode");
+        client.sendRequest("DELETE job");
+
+        // Examples of GET
+        client.sendRequest("GET firstname");
+        client.sendRequest("GET lastname");
+
     }
 }
