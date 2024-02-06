@@ -7,17 +7,27 @@ public class ClientApp {
 
     /**
      * Main driver that starts the connection
+     * CS5010 //Todo search later
      * @param args hostname, port, and protocol (111111 3000 tcp
      */
     public static void main(String[] args) {
+
+        ClientLogger.log("Starting Client Application");
 
         // Make sure enough arguments exist (address, port, protocol
         if (args.length != 3) {
 
             // Error handling
-            System.out.println("Usage: java client.ClientApp <hostname> <port> <protocol>");
+            ClientLogger.log("Error. Usage: java client.ClientApp <hostname> <port> <protocol> (java client.ClientApp localhost 1234 tcp)");
             System.exit(1);
         }
+
+        // todo:
+        // handle error of hostname
+        // account of garbage vals "adasdasd"
+        // account for host and IP address
+        // try catch to find exceptions
+        // e is generic exception
 
         // Set the arguments as variables
         String hostname = args[0];
@@ -37,6 +47,8 @@ public class ClientApp {
         } else {
 
             // Client-side error handlign for bad protocol
+            // Logger -> write to file .txt
+            // https://docs.oracle.com/javase%2F7%2Fdocs%2Fapi%2F%2F/java/util/logging/Logger.html
             System.out.println("Unsupported protocol: " + protocol);
             return;
         }

@@ -22,6 +22,8 @@ public class UDPClient extends AbstractClient {
             // Setting the timeout
             socket.setSoTimeout(TIMEOUT_MS);
 
+            // Excpetions
+
             // Method to send data
             byte[] sendData = request.getBytes();
 

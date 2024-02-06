@@ -12,7 +12,7 @@
 - [X] Comment your code and appropriately split the project into multiple functions and/or classes
 - [X] Client to take the hostname or IP address of the server (it must accept either)
 - [X] Client to take the port number of the server
-- [ ] The client should be robust to server failure by using a timeout mechanism to deal with an unresponsive server
+- [X] The client should be robust to server failure by using a timeout mechanism to deal with an unresponsive server
 - [ ] If it does not receive a response to a particular request, you should note it in a client log and send the remaining requests
 - [ ] You will have to design a simple protocol to communicate packet contents for the three request types
 - [ ] The client must be robust to malformed or unrequested datagram packets
