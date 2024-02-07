@@ -30,7 +30,7 @@
 - [ ] Check requestID for malformed data
 - [ ] Containerization is not needed. Java Files along with README should be good to go.
 - [ ] Please spend some time to make a proper `ReadME` markdown file, explaining all the steps necessary to execute your source code.
-- [ ] Do not hardcode IP address or port numbers, try to collect these configurable information from config file/env variables/cmd input args. 
+- [X] Do not hardcode IP address or port numbers, try to collect these configurable information from config file/env variables/cmd input args. 
 - [ ] Attach screenshots of your testing done on your local environment.]
 
 

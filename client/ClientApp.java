@@ -10,13 +10,13 @@ public class ClientApp {
 
     /**
      * Main driver that starts the connection
-     * @param args hostname, port, and protocol (111111 3000 tcp
+     * @param args hostname, port, and protocol
      */
     public static void main(String[] args) {
 
         ClientLogger.log("Alert - Starting Client Application");
 
-        // Make sure enough arguments exist (address, port, protocol
+        // Make sure enough arguments exist (address, port, protocol, ...)
         if (args.length != 3) {
 
             // Error handling
@@ -31,6 +31,7 @@ public class ClientApp {
             System.exit(1);
         }
 
+        // Placeholder for port to avoid error when compiling
         int port = 0;
         try {
             // Parse port
@@ -45,23 +46,6 @@ public class ClientApp {
             ClientLogger.log("Invalid port number: " + args[1]);
             System.exit(1);
         }
-
-
-
-        // todo:
-        // handle error of hostname as a string
-        // account of garbage vals "adasdasd"
-        // account for host and IP address
-        // try catch to find exceptions
-        // e is generic exception
-
-        // Set the arguments as variables
-//        String hostname = args[0];
-//        int port = Integer.parseInt(args[1]);
-//        String protocol = args[2];
-
-        // Create an abstract client for TCP
-//        AbstractClient client;
 
         // Check if TCP
         String protocol = args[2].toLowerCase();
@@ -79,26 +63,16 @@ public class ClientApp {
                 ClientLogger.log("Unsupported protocol: " + protocol);
                 return;
         }
-//        if ("tcp".equalsIgnoreCase(protocol)) {
-//            client = new TCPClient(hostname, port);
-//        } else if ("udp".equalsIgnoreCase(protocol)) {
-//
-//            // Check if UDP
-//            client = new UDPClient(hostname, port);
-//        } else {
-//
-//            // Client-side error handlign for bad protocol
-//            // Logger -> write to file .txt
-//            // https://docs.oracle.com/javase%2F7%2Fdocs%2Fapi%2F%2F/java/util/logging/Logger.html
-//            ClientLogger.log("Error - Unsupported protocol: " + protocol);
-//            return;
-//        }
 
         // Run operations
         performClientOperations(client);
 
     }
 
+    /**
+     * Function that runs the client operations of 5 per category
+     * @param client
+     */
     private static void performClientOperations(AbstractClient client) {
         // Examples of PUT
         client.sendRequest("PUT firstname saleh");
