@@ -34,22 +34,22 @@ public class UDPHandler implements Runnable {
                 //PUT
                 case "PUT":
                     store.put(tokens[1], tokens[2]);
-                    response = "200";
+                    response = "200 - Message received and saved successfully";
                     break;
 
                 // GET
                 case "GET":
                     String value = store.get(tokens[1]);
-                    response = value != null ? value : "404 NOT FOUND";
+                    response = value != null ? value : "404 - Key not found.";
                     break;
 
                 // DELETTE
                 case "DELETE":
                     store.delete(tokens[1]);
-                    response = "200";
+                    response = "200 - Message deleted successfully";
                     break;
                 default:
-                    response = "ERROR Please make me into a logger and dont forget";
+                    response = "Unknown Error - Invalid key received. Please use PUT DELETE GET.";
             }
 
             ServerLogger.log("UDP Server - Incoming Request: " + response);
