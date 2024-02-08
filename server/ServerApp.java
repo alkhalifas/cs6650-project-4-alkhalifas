@@ -29,8 +29,8 @@ public class ServerApp {
         // https://docs.oracle.com/javase/8/docs/api/java/net/ServerSocket.html
         ServerSocket tcpServerSocket = new ServerSocket(tcpPort);
         DatagramSocket udpServerSocket = new DatagramSocket(udpPort);
-        ServerLogger.log("TCP Server is running on port " + tcpPort);
-        ServerLogger.log("UDP Server is running on port " + udpPort);
+        ServerLogger.log("Server: TCPHanlder is running on port " + tcpPort);
+        ServerLogger.log("Server: UDPHandler is running on port " + udpPort);
 
         // Instantiate the KV database / datastore
         KeyValue store = new KeyValue();

@@ -50,15 +50,15 @@ public class TCPClient extends AbstractClient {
             try {
                 // Logger with response
                 String response = in.readLine();
-                ClientLogger.log("TCPClient: Response: " + response);
+                ClientLogger.log("TCPClient: " + response);
             } catch (SocketTimeoutException e) {
 
                 //Logger with error message
-                ClientLogger.log("SocketTimeoutException occurred: Server is unresponsive: " + e);
+                ClientLogger.log("TCPClient: SocketTimeoutException occurred: Server is unresponsive: " + e);
             }
 
         } catch (IOException e) {
-            ClientLogger.log("IOException occurred: Server is unresponsive: " + e);
+            ClientLogger.log("TCPClient: IOException occurred: Server is unresponsive: " + e);
             e.printStackTrace();
         }
     }

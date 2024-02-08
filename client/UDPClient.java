@@ -44,12 +44,12 @@ public class UDPClient extends AbstractClient {
             try {
                 socket.receive(receivePacket);
                 String response = new String(receivePacket.getData(), 0, receivePacket.getLength());
-                ClientLogger.log("UDPClient: Response: " + response);
+                ClientLogger.log("UDPClient: " + response);
             } catch (SocketTimeoutException e) {
-                ClientLogger.log("SocketTimeoutException occurred: Server is unresponsive: " + e);
+                ClientLogger.log("UDPClient: SocketTimeoutException occurred: Server is unresponsive: " + e);
             }
         } catch (IOException e) {
-            ClientLogger.log("IOException occurred: Server is unresponsive: " + e);
+            ClientLogger.log("UDPClient: IOException occurred: Server is unresponsive: " + e);
             e.printStackTrace();
         }
     }

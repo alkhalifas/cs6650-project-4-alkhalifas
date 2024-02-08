@@ -52,7 +52,10 @@ public class UDPHandler implements Runnable {
                     response = "Unknown Error - Invalid key received. Please use PUT DELETE GET.";
             }
 
-            ServerLogger.log("UDP Server - Incoming Request: " + response);
+            String senderAddress = packet.getAddress().getHostAddress();
+            int senderPort = packet.getPort();
+
+            ServerLogger.log("UDP Server: Incoming Request from " + senderAddress + ":" + senderPort + " - " + response);
 
 
             // response handling

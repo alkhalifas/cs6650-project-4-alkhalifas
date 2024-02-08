@@ -61,8 +61,15 @@ public class TCPHandler implements Runnable {
                     default:
                         response = "Unknown Error - Invalid key received. Please use PUT DELETE GET.";
                 }
-                // print the response // todo: add logger later
-                ServerLogger.log("TCP Server - Incoming Request: " + response);
+
+                // Get the client address using getInetAddress
+                String clientAddress = clientSocket.getInetAddress().getHostAddress();
+
+                // Get the client port
+                int clientPort = clientSocket.getPort();
+
+                // print the response
+                ServerLogger.log("TCPHandler: Incoming Request from " + clientAddress + ":" + clientPort + ", response: " + response);
 
                 // Send back response
                 out.println(response);

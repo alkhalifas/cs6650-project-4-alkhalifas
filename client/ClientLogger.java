@@ -9,7 +9,7 @@ import java.time.format.DateTimeFormatter;
 public class ClientLogger {
     public static void log(String message) {
         LocalDateTime now = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
         String formattedDateTime = now.format(formatter);
 
         System.out.println(formattedDateTime + " - " + message);
