@@ -41,6 +41,7 @@
 
 Compile the Java code:
 
+    cd src
     javac server/*.java client/*.java
 
 Run the Server:
@@ -61,5 +62,3 @@ Alternatively, you can run the .sh files instead:
 
     chmod +x run_client.sh
     ./run_client.sh
-
-### Executive Summary:
