@@ -2,11 +2,9 @@ package server;
 
 import java.util.HashMap;
 
-
-//Pair<String, String> keyValue = new ImmutablePair("key", "value");
-//Integer key = ImmutablePair.getKey();
-//String value = ImmutablePair.getValue();
-
+/**
+ * Key Value hashmap that acts as a data store for TCP and UDP communications
+ */
 public class KeyValue {
     private HashMap<String, String> dataStore;
 
