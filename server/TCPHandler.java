@@ -7,12 +7,18 @@ import java.io.PrintWriter;
 import java.io.IOException;
 
 /**
- * TCPHandler class
+ * TCPHandler class for server that implenents Runnable to have threading capability
  */
 public class TCPHandler implements Runnable {
     private Socket clientSocket;
     private KeyValue store;
 
+    /**
+     * TCPHandler that connects to store and socket
+     *
+     * @param socket
+     * @param store
+     */
     public TCPHandler(Socket socket, KeyValue store) {
 
         // Set the socket and store
@@ -20,8 +26,13 @@ public class TCPHandler implements Runnable {
         this.store = store;
     }
 
+    /**
+     * Method that starts the TCP server
+     */
     @Override
     public void run() {
+
+        // Start try except block
         try {
             // Input output //todo: add logger here later
             BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
@@ -36,6 +47,15 @@ public class TCPHandler implements Runnable {
                 String command = tokens[0];
                 String response = "";
 
+                // Check for malformed requests
+                if (tokens.length < 2 || tokens.length > 3) {
+                    // Log malformed request
+                    ServerLogger.log("TCPHandler: Received malformed request of length " + tokens.length + " from " + clientSocket.getInetAddress().getHostAddress() + ":" + clientSocket.getPort());
+                    response = "400 - Bad Request. Expected format: COMMAND KEY [VALUE]";
+                    out.println(response);
+                    continue;
+                }
+
                 // Conditional switch to get the specific command
                 switch (command.toUpperCase()) {
 
@@ -48,7 +68,7 @@ public class TCPHandler implements Runnable {
                     // GET
                     case "GET":
                         String value = store.get(tokens[1]);
-                        response = value != null ? value : "404 - Key not found.";
+                        response = value != null ? "200 - " + value : "404 - Key not found";
                         break;
 
                     // DLETE
@@ -59,7 +79,7 @@ public class TCPHandler implements Runnable {
 
                     //Error handler to give user feedback, per specification
                     default:
-                        response = "Unknown Error - Invalid key received. Please use PUT DELETE GET.";
+                        response = "400 - Bad Request. Invalid key received. Please use PUT DELETE GET.";
                 }
 
                 // Get the client address using getInetAddress
