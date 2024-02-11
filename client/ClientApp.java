@@ -55,9 +55,11 @@ public class ClientApp {
         switch (protocol) {
             case "tcp":
                 client = new TCPClient(hostname, port);
+                ClientLogger.log("ClientApp: Starting TCP Client");
                 break;
             case "udp":
                 client = new UDPClient(hostname, port);
+                ClientLogger.log("ClientApp: Starting UDP Client");
                 break;
             default:
                 ClientLogger.log("Unsupported protocol: " + protocol);
@@ -86,8 +88,6 @@ public class ClientApp {
         client.sendRequest("PUT height 6ft");
         client.sendRequest("PUT phone 1234567890");
         client.sendRequest("PUT email somewhere@gmail.com");
-
-
     }
 
     /**
@@ -137,7 +137,12 @@ public class ClientApp {
 
         // Two PUTs
         client.sendRequest("PUT task laundry");
-        client.sendRequest("PUT task cooking");
+        client.sendRequest("PUT task cooking"); // Will overwrite previous
+        client.sendRequest("GET task");
+
+        // Two DELETEs
+        client.sendRequest("GET task");
+        client.sendRequest("DELETE task");
         client.sendRequest("GET task");
 
     }
