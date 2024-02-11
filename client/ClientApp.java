@@ -78,7 +78,7 @@ public class ClientApp {
      */
     private static void prepopulateClient(AbstractClient client) {
 
-        ClientLogger.log("TCPClient: Populating Data Store");
+        ClientLogger.log("ClientApp: Populating Data Store");
 
         // Examples of PUT
         client.sendRequest("PUT school northeastern");
@@ -97,7 +97,7 @@ public class ClientApp {
     private static void performClientOperations(AbstractClient client) {
 
         // 5 of Each Operation
-        ClientLogger.log("TCPClient: Running 5 of each operation");
+        ClientLogger.log("ClientApp: Running 5 of each operation");
 
         // 5 Examples of PUT
         client.sendRequest("PUT firstname saleh");
@@ -122,7 +122,7 @@ public class ClientApp {
         client.sendRequest("DELETE job");
 
         // Edge Cases:
-        ClientLogger.log("TCPClient: Running Edge Cases");
+        ClientLogger.log("ClientApp: Running Edge Cases");
 
         // Examples of GET after DELETE
         client.sendRequest("GET firstname");
