@@ -1,5 +1,21 @@
 #!/bin/bash
 
+echo " "
+echo " "
+echo " "
+echo "############################################################"
+echo ",------.                ,--.               ,--.       ,--. "
+echo "|  .--. ',--.--. ,---.  '--' ,---.  ,---.,-'  '-.    /   | "
+echo "|  '--' ||  .--'| .-. | ,--.| .-. :| .--''-.  .-'    '|  | "
+echo "|  | --' |  |   ' '-' ' |  |\   --.\ '--.  |  |       |  | "
+echo "'--'     '--'   ''---'.-'  / '----' '---'  '--'       '--' "
+echo "                      '---'                                "
+echo "############################################################"
+
+
+cd src
+javac server/*.java client/*.java
+
 # TCP CLIENT
 
 echo "----------------------------"
@@ -11,7 +27,7 @@ echo "   '--'    '-----''--'"
 echo "----------------------------"
 echo "Running TCP Client..."
 
-java client.ClientApp localhost 1234 tcp
+java -cp . client.ClientApp localhost 1234 tcp
 
 # UDP CLIENT
 
@@ -24,4 +40,14 @@ echo "''-----' '-------' ''--'     "
 echo "----------------------------"
 echo "Running UDP Client..."
 
-java client.ClientApp localhost 4321 udp
+java -cp . client.ClientApp localhost 4321 udp
+
+
+echo "############################################################"
+echo " ,---.  ,--. ,--. ,-----. ,-----.,------. ,---.   ,---.   "
+echo "'   .-' |  | |  |'  .--./'  .--./|  .---''   .-' '   .-'  "
+echo "'.  '-. |  | |  ||  |    |  |    |  '--, '.  '-. '.  '-.  "
+echo ".-'    |'  '-'  ''  '--'\'  '--'\|  '---..-'    |.-'    | "
+echo "'-----'  '-----'  '-----' '-----''------''-----' '-----'  "
+echo "############################################################"
+echo "Successfully ran all examples and tests. Please visit ClientApp.java to adjust the examples and tests as needed."
