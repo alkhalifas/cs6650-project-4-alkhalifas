@@ -12,3 +12,9 @@ Additionally, the project underscored the importance of data integrity and valid
 
 The most interesting part of this assignment at its core was using the Runnable class within Java, specifically in the ServerApp class, to implement two threads: one for TCP Handler and another for the UDP Handler. It took a considerable amount of time to understand the theory and language enough to create the sockets and foundational logic to implement the capability. In the end, it was rewarding to see theory translate to application. This project not only enhanced my technical skills in Java and network programming but also deepened my appreciation for the intricacies of building scalable, distributed systems. I look forward to expanding this code base further as we dive deeper into distributed systems.
 
+![Class Diagram](artifacts/class_diagram.png "Class Diagram")
+
+
+### 3. Use Case / Application:
+
+One example of a practical application of this system is in the field I currently work within: the pharmaceutical manufacturing domain. This could be applied within a manufacturing perspective, specifically for Internet of Things (IoT) in which multiple systems transmit data within the network to a centralized server. TCP can be used for applications where data integrity and delivery are crucial such as for data regulated by the FDA. On the other hand, UDP can be used for non-critical data flow in which speed is prioritized over reliability.
