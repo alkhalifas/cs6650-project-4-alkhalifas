@@ -2,6 +2,8 @@
 
 Requirements:
 - [ ] Docker is optional, but not required
+- [X] Follow directory structure from guidelines
+- [ ] Create a run_client.sh file
 - [X] You must also use two distinct L4 communication protocols
 - [X] Your implementation may be written in Java
 - [X] Your source code should be well-factored and well-commented.
@@ -20,12 +22,12 @@ Requirements:
 - [X] The server must display the requests received, and its responses, both in a human readable
 - [X] that is, it must explicitly print to the server log that it received a query from a particular InetAddress and port number
 - [ ] The server must be robust to malformed datagram packets
-- [ ] If it receives a malformed datagram packet, it should report it in a human-readable way (length + address:port)
+- [X] If it receives a malformed datagram packet, it should report it in a human-readable way (length + address:port)
 - [X] Every line the server prints to standard output or standard error must be time-stamped with the current system time (i.e., System.currentTimeMillis()).
 - [X] You may format the time any way you like as long as your output maintains millisecond precision
 - [X] You must have two instances of your server (or two separate servers)
-- [ ] You should use your client to pre-populate the Key-Value store with data and a set of keys.
-- [ ] Once the key-value store is populated, your client must do at least five of each operation: 5 PUTs, 5 GETs, 5 DELETEs.
+- [X] You should use your client to pre-populate the Key-Value store with data and a set of keys.
+- [X] Once the key-value store is populated, your client must do at least five of each operation: 5 PUTs, 5 GETs, 5 DELETEs.
 - [ ] “Assignment overview” (1 paragraph, up to about 250 words) explaining what you understand to be the purpose and scope of the assignment
 - [ ] “technical impression” (1–2 paragraphs, about 200–500 words) describing your experiences while carrying out the assignment.
 - [ ] Provide a use case (application) 3 where you would apply this in practice.

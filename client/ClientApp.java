@@ -63,6 +63,7 @@ public class ClientApp {
                 ClientLogger.log("Unsupported protocol: " + protocol);
                 return;
         }
+
         // Prepopulate Client
         prepopulateClient(client);
 
@@ -98,21 +99,22 @@ public class ClientApp {
         // 5 of Each Operation
         ClientLogger.log("TCPClient: Running 5 of each operation");
 
-        // Examples of PUT
+        // 5 Examples of PUT
         client.sendRequest("PUT firstname saleh");
         client.sendRequest("PUT lastname alkhalifa");
         client.sendRequest("PUT tvshow seinfeld");
         client.sendRequest("PUT zipcode 02148");
         client.sendRequest("PUT job datascientist");
+        client.sendRequest("PUT school neu");
 
-        // Examples of GET
+        // 5 Examples of GET
         client.sendRequest("GET firstname");
         client.sendRequest("GET lastname");
         client.sendRequest("GET job");
         client.sendRequest("GET datascientist");
         client.sendRequest("GET car");
 
-        // Examples of DELETE
+        // 5 Examples of DELETE
         client.sendRequest("DELETE firstname");
         client.sendRequest("DELETE lastname");
         client.sendRequest("DELETE tvshow");
@@ -132,6 +134,11 @@ public class ClientApp {
         // Timemout
         client.sendRequest("PUT"); // Will time out and then continue to next command
         client.sendRequest("PUT firstname saleh");
+
+        // Two PUTs
+        client.sendRequest("PUT task laundry");
+        client.sendRequest("PUT task cooking");
+        client.sendRequest("GET task");
 
     }
 
