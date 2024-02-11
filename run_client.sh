@@ -1,11 +1,27 @@
-# Compile Code:
-javac server/*.java client/*.java
+#!/bin/bash
 
-# Start Server:
-java server.ServerApp 1234 4321
+# TCP CLIENT
 
-# first step:
-java client.ClientApp localhost 4321 udp
+echo "----------------------------"
+echo ",--------. ,-----.,------."
+echo "'--.  .--''  .--./|  .--. '"
+echo "   |  |   |  |    |  '--' |"
+echo "   |  |   '  '--'\|  | --'"
+echo "   '--'    '-----''--'"
+echo "----------------------------"
+echo "Running TCP Client..."
 
-# second
 java client.ClientApp localhost 1234 tcp
+
+# UDP CLIENT
+
+echo "----------------------------"
+echo ",--. ,--.,------.  ,------.  "
+echo "|  | |  ||  .-.  \ |  .--. ' "
+echo "|  | |  ||  |  \  :|  '--' | "
+echo "'  '-'  '|  '--'  /|  | --'  "
+echo "''-----' '-------' ''--'     "
+echo "----------------------------"
+echo "Running UDP Client..."
+
+java client.ClientApp localhost 4321 udp

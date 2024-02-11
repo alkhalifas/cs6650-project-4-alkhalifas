@@ -51,4 +51,12 @@ Run the Client:
     java client.ClientApp localhost 1234 tcp
     java client.ClientApp localhost 4321 udp
 
+Alternatively, you can run the .sh files instead:
+
+    chmod +x run_server.sh
+    ./run_server.sh
+
+    chmod +x run_client.sh
+    ./run_client.sh
+
 ### Executive Summary:
