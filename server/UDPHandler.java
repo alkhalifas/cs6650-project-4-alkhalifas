@@ -39,6 +39,7 @@ public class UDPHandler implements Runnable {
             String request = new String(packet.getData(), 0, packet.getLength()).trim();
             ServerLogger.log("Received request from " + senderAddress + ":" + senderPort + " - " + request);
 
+            // Split tokens to spearate
             String[] tokens = request.split(" ");
             String response = "";
 
@@ -55,11 +56,11 @@ public class UDPHandler implements Runnable {
 
                 // Create a DatagramSocket to send the response
                 try (DatagramSocket responseSocket = new DatagramSocket()) {
-                    responseSocket.send(responsePacket); // Send the response
+                    responseSocket.send(responsePacket);
                 } catch (IOException e) {
                     ServerLogger.log("UDPHandler: Error sending response to " + senderAddress + ":" + senderPort + " - " + e.getMessage());
                 }
-                return; // Exit the method or handle accordingly
+                return;
             }
 
             // Conditional switch to get the specific command
