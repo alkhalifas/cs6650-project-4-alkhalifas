@@ -30,11 +30,11 @@
 - [X] You must have two instances of your server (or two separate servers)
 - [X] You should use your client to pre-populate the Key-Value store with data and a set of keys.
 - [X] Once the key-value store is populated, your client must do at least five of each operation: 5 PUTs, 5 GETs, 5 DELETEs.
-- [ ] Create an executive summary comprising “Assignment overview”, “technical impression”, and three use cases to apply this in practice.
-- [ ] “Assignment overview” (1 paragraph, up to about 250 words) explaining what you understand to be the purpose and scope of the assignment
-- [ ] “technical impression” (1–2 paragraphs, about 200–500 words) describing your experiences while carrying out the assignment.
-- [ ] Provide a use case (application) 3 where you would apply this in practice.
-- [ ] Attach screenshots of your testing done on your local environment.
+- [X] Create an executive summary comprising “Assignment overview”, “technical impression”, and three use cases to apply this in practice.
+- [X] “Assignment overview” (1 paragraph, up to about 250 words) explaining what you understand to be the purpose and scope of the assignment
+- [X] “technical impression” (1–2 paragraphs, about 200–500 words) describing your experiences while carrying out the assignment.
+- [X] Provide a use case (application) 3 where you would apply this in practice.
+- [X] Attach screenshots of your testing done on your local environment.
 
 
 ### Instructions:
@@ -62,3 +62,17 @@ Alternatively, you can run the .sh files instead:
 
     chmod +x run_client.sh
     ./run_client.sh
+
+### Screen Shots:
+
+Starting the server:
+![Starting Server](artifacts/server_start.png "server_start")
+
+Running Client Executable:
+![Client Start](artifacts/run_client_start.png "Client Start")
+
+End of the Client Executable:
+![Client End](artifacts/run_client_end.png "Client End")
+
+Server Logs:
+![Server Logs](artifacts/server_logs.png "Server Logs")
