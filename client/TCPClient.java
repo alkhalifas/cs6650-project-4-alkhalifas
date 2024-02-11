@@ -11,6 +11,7 @@ import java.io.IOException;
  * TCP Client class
  */
 public class TCPClient extends AbstractClient {
+
     // Timeout requirement
     private static final int TIMEOUT_MS = 5000;
 
@@ -48,16 +49,19 @@ public class TCPClient extends AbstractClient {
             out.println(request);
 
             try {
-                // Logger with response
+                // ReadLine and Logger with response
                 String response = in.readLine();
                 ClientLogger.log("TCPClient: " + response);
+
             } catch (SocketTimeoutException e) {
 
-                //Logger with error message
+                //Logger with error message for SocketTimeoutException
                 ClientLogger.log("TCPClient: SocketTimeoutException occurred. Server is unresponsive. Please check your request and try again.");
             }
 
         } catch (IOException e) {
+
+            //Logger with error message for IOException
             ClientLogger.log("TCPClient: IOException occurred. Server is unresponsive. Connection Refused. Please check your IP and Port.");
 //            e.printStackTrace();
         }
