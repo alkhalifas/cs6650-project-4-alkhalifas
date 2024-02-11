@@ -5,7 +5,7 @@ import java.net.DatagramSocket;
 import java.io.IOException;
 
 /**
- * UDP Handler Class placeholder
+ * UDP Handler Class for the server
  */
 public class UDPHandler implements Runnable {
     private DatagramPacket packet;
@@ -18,61 +18,48 @@ public class UDPHandler implements Runnable {
 
     @Override
     public void run() {
+        String senderAddress = packet.getAddress().getHostAddress();
+        int senderPort = packet.getPort();
         try {
+            String request = new String(packet.getData(), 0, packet.getLength()).trim();
+            ServerLogger.log("Received request from " + senderAddress + ":" + senderPort + " - " + request);
 
-            // Get the request, tokens command
-            String request = new String(packet.getData(), 0, packet.getLength());
             String[] tokens = request.split(" ");
-            String command = tokens[0];
-
-            // Response
             String response = "";
 
-            // Conditional for each command
-            switch (command.toUpperCase()) {
+            if (tokens.length < 2) {
+                throw new IllegalArgumentException("Incomplete request");
+            }
 
-                //PUT
+            switch (tokens[0].toUpperCase()) {
                 case "PUT":
+                    if (tokens.length < 3) throw new IllegalArgumentException("PUT request missing arguments");
                     store.put(tokens[1], tokens[2]);
                     response = "200 - Message received and saved successfully";
                     break;
-
-                // GET
                 case "GET":
                     String value = store.get(tokens[1]);
-                    response = value != null ? value : "404 - Key not found.";
+                    response = value != null ? value : "404 - Key not found";
                     break;
-
-                // DELETTE
                 case "DELETE":
                     store.delete(tokens[1]);
                     response = "200 - Message deleted successfully";
                     break;
                 default:
-                    response = "Unknown Error - Invalid key received. Please use PUT DELETE GET.";
+                    throw new IllegalArgumentException("Unknown command");
             }
 
-            String senderAddress = packet.getAddress().getHostAddress();
-            int senderPort = packet.getPort();
+            ServerLogger.log("Response to " + senderAddress + ":" + senderPort + " - " + response);
 
-            ServerLogger.log("UDP Server: Incoming Request from " + senderAddress + ":" + senderPort + " - " + response);
-
-
-            // response handling
             byte[] responseData = response.getBytes();
-            DatagramSocket socket = new DatagramSocket();
             DatagramPacket responsePacket = new DatagramPacket(responseData, responseData.length, packet.getAddress(), packet.getPort());
-            socket.send(responsePacket);
-            socket.close();
-
-            // Response handling
-//            byte[] responseData = response.getBytes();
-//            DatagramSocket socket = new DatagramSocket();
-//            DatagramPacket responsePacket = new DatagramPacket(responseData, responseData.length, packet.getAddress(), packet.getPort());
-//            socket.send(responsePacket);
-//            socket.close();
+            DatagramSocket responseSocket = new DatagramSocket();
+            responseSocket.send(responsePacket);
+            responseSocket.close();
+        } catch (IllegalArgumentException e) {
+            ServerLogger.log("Received malformed request of length " + packet.getLength() + " from " + senderAddress + ":" + senderPort + " - Error: " + e.getMessage());
         } catch (IOException e) {
-            e.printStackTrace();
+            ServerLogger.log("IOException occurred while responding to " + senderAddress + ":" + senderPort + " - Error: " + e.getMessage());
         }
     }
 }

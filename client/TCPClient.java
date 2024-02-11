@@ -54,12 +54,12 @@ public class TCPClient extends AbstractClient {
             } catch (SocketTimeoutException e) {
 
                 //Logger with error message
-                ClientLogger.log("TCPClient: SocketTimeoutException occurred: Server is unresponsive: " + e);
+                ClientLogger.log("TCPClient: SocketTimeoutException occurred. Server is unresponsive. Please check your request and try again.");
             }
 
         } catch (IOException e) {
-            ClientLogger.log("TCPClient: IOException occurred: Server is unresponsive: " + e);
-            e.printStackTrace();
+            ClientLogger.log("TCPClient: IOException occurred. Server is unresponsive. Connection Refused. Please check your IP and Port.");
+//            e.printStackTrace();
         }
     }
 }

@@ -14,7 +14,7 @@ public class ClientApp {
      */
     public static void main(String[] args) {
 
-        ClientLogger.log("Alert - Starting Client Application");
+        ClientLogger.log("TCPClient: Starting Client Application on " + args[2] + " - " + args[0] + ":" + args[1]);
 
         // Make sure enough arguments exist (address, port, protocol, ...)
         if (args.length != 3) {
@@ -63,8 +63,10 @@ public class ClientApp {
                 ClientLogger.log("Unsupported protocol: " + protocol);
                 return;
         }
+        // Prepopulate Client
+        prepopulateClient(client);
 
-        // Run operations
+        // Run Operations (5 of each, plus edge cases)
         performClientOperations(client);
 
     }
@@ -73,7 +75,29 @@ public class ClientApp {
      * Function that runs the client operations of 5 per category
      * @param client
      */
+    private static void prepopulateClient(AbstractClient client) {
+
+        ClientLogger.log("TCPClient: Populating Data Store");
+
+        // Examples of PUT
+        client.sendRequest("PUT school northeastern");
+        client.sendRequest("PUT pet dog");
+        client.sendRequest("PUT height 6ft");
+        client.sendRequest("PUT phone 1234567890");
+        client.sendRequest("PUT email somewhere@gmail.com");
+
+
+    }
+
+    /**
+     * Function that runs the client operations of 5 per category
+     * @param client
+     */
     private static void performClientOperations(AbstractClient client) {
+
+        // 5 of Each Operation
+        ClientLogger.log("TCPClient: Running 5 of each operation");
+
         // Examples of PUT
         client.sendRequest("PUT firstname saleh");
         client.sendRequest("PUT lastname alkhalifa");
@@ -95,9 +119,20 @@ public class ClientApp {
         client.sendRequest("DELETE zipcode");
         client.sendRequest("DELETE job");
 
+        // Edge Cases:
+        ClientLogger.log("TCPClient: Running Edge Cases");
+
         // Examples of GET after DELETE
         client.sendRequest("GET firstname");
         client.sendRequest("GET lastname");
+
+        // Invalid Key
+        client.sendRequest("MOVE lastname");
+
+        // Timemout
+        client.sendRequest("PUT"); // Will time out and then continue to next command
+        client.sendRequest("PUT firstname saleh");
+
     }
 
     /**
