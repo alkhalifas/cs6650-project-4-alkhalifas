@@ -82,16 +82,24 @@ public class UDPHandler implements Runnable {
                     throw new IllegalArgumentException("Unknown command");
             }
 
+            // Post to logger
             ServerLogger.log("Response to " + senderAddress + ":" + senderPort + " - " + response);
 
+            // Response data using bytes
             byte[] responseData = response.getBytes();
             DatagramPacket responsePacket = new DatagramPacket(responseData, responseData.length, packet.getAddress(), packet.getPort());
             DatagramSocket responseSocket = new DatagramSocket();
+
+            // Send response
             responseSocket.send(responsePacket);
             responseSocket.close();
         } catch (IllegalArgumentException e) {
+
+            // Log the malformed request
             ServerLogger.log("Received malformed request of length " + packet.getLength() + " from " + senderAddress + ":" + senderPort + " - Error: " + e.getMessage());
         } catch (IOException e) {
+
+            // Log the IO Exception
             ServerLogger.log("IOException occurred while responding to " + senderAddress + ":" + senderPort + " - Error: " + e.getMessage());
         }
     }
