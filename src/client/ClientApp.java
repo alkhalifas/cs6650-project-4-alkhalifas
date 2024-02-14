@@ -2,6 +2,7 @@ package client;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.Scanner;
 
 /**
  * Class for the client application that implements the calls
@@ -71,6 +72,33 @@ public class ClientApp {
 
         // Run Operations (5 of each, plus edge cases)
         performClientOperations(client);
+
+
+        // Start taking user input for commands to make it interactive
+
+        // Scanner input
+        Scanner scanner = new Scanner(System.in);
+        ClientLogger.log("Automated prepopulation and operations completed. You can now enter commands interactively.");
+        ClientLogger.log("Enter commands in the format: ACTION key [value] or 'quit' to quit.");
+
+        // Enter loop to enter commands
+        while (true) {
+            // Start interfacting with client
+            System.out.print("Enter command: ");
+            String inputLine = scanner.nextLine().trim();
+
+            if ("quit".equalsIgnoreCase(inputLine)) {
+                ClientLogger.log("Exiting client, thanks for testing me. Goodbye!");
+                break;
+            }
+
+            if (!inputLine.isEmpty()) {
+                client.sendRequest(inputLine);
+            } else {
+                ClientLogger.log("Invalid input. Please enter a command in the format 'ACTION key [value]' or 'exit' to quit.");
+            }
+        }
+        scanner.close(); // Close the scanner before exiting
 
     }
 
