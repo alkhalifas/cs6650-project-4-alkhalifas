@@ -3,7 +3,8 @@
 ### Spring 2024
 
 ### Requirements:
-- [ ] Docker is optional, but not required
+- [X] Make the client interactive
+- [X] Docker is optional, but not required
 - [X] Follow directory structure from guidelines
 - [X] Create a run_client.sh file
 - [X] You must also use two distinct L4 communication protocols
@@ -95,3 +96,6 @@ Server Logs:
 
 Docker Server Logs:
 ![Docker Server Logs](artifacts/docker_server.png "Docker Server Logs")
+
+Docker Client Output:
+![Docker Client Logs](artifacts/docker_client_output.png "Docker Client Logs")
