@@ -76,3 +76,6 @@ End of the Client Executable:
 
 Server Logs:
 ![Server Logs](artifacts/server_logs.png "Server Logs")
+
+Docker Server Logs:
+![Docker Server Logs](artifacts/docker_server.png "Docker Server Logs")
