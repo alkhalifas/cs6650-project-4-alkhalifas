@@ -39,6 +39,10 @@
 
 ### Instructions:
 
+There are three methods to run the code for your convenience.
+
+#### 1. Quick Start:
+
 Compile the Java code:
 
     cd src
@@ -55,13 +59,25 @@ Run the Client:
     java client.ClientApp localhost 1234 tcp
     java client.ClientApp localhost 4321 udp
 
+#### 2. Quick Start Scripts:
+
 Alternatively, you can run the .sh files instead:
 
-    chmod +x run_server.sh
-    ./run_server.sh
+    chmod +x run_server_no_docker.sh
+    ./run_server_no_docker.sh
 
-    chmod +x run_client.sh
-    ./run_client.sh
+    chmod +x run_client_no_docker.sh
+    ./run_client_no_docker.sh
+
+#### 3. Run Docker:
+
+    cd src
+    sudo ./deploy.sh
+    sudo docker build -t project-1-client-image --target client-build .
+
+    sudo ./run_client.sh project-1-client-container 1111 tcp
+    sudo ./run_client.sh project-1-client-container 5555 udp
+
 
 ### Screen Shots:
 
