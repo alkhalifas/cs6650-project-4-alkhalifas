@@ -13,8 +13,15 @@ public class ClientApp {
 
     public static void main(String[] args) {
         try {
-            // Instantiate registry and the KV service
-            Registry registry = LocateRegistry.getRegistry("localhost", 1099);
+
+            // Get host name, otherwise default to local host
+            String host = args.length > 0 ? args[0] : "localhost";
+
+            // Get port name otherwise detault to 1099
+            int rmiPort = args.length > 1 ? Integer.parseInt(args[1]) : 1099;
+
+            // instantiate registry and service using the host and port
+            Registry registry = LocateRegistry.getRegistry(host, rmiPort);
             service = (KeyValueInterface) registry.lookup("KeyValueService");
 
             // Pre-populate the key-value store
