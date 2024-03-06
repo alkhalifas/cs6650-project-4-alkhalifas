@@ -16,9 +16,9 @@ public class ServerApp {
             registry.rebind("KeyValueService", service);
 
             // print for now
-            System.out.println(">>>>>>>>Key-Value Store Service is running!!!!!!!!!!!!!!!!!");
+            ServerLogger.log("Key-Value Store Service is running");
         } catch (Exception e) {
-            System.err.println("Server exception: " + e.toString());
+            ServerLogger.log("Server exception: " + e.toString());
             e.printStackTrace();
         }
     }
