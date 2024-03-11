@@ -3,6 +3,9 @@ package server;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
+/**
+ * ServerApp containing the backend logic, as well registry and KV service
+ */
 public class ServerApp {
     public static void main(String[] args) {
         try {
