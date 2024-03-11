@@ -3,18 +3,18 @@
 ### Spring 2024
 
 ### Project 2 New Requirements:
-- [ ] You need to enable your client and server to communicate using Remote Procedure Calls (RPC) instead of sockets
-- [ ] If you’ve implemeteamnted Project #1 in Java, you may want to look into and leverage Java RMI for RPC communication
-- [ ] You need to make your server multi-threaded such that you can handle multiple outstanding client requests at once.
-- [ ] The key result is that your servers should be able to handle requests from multiple running instances of you client doing concurrent PUT, GET, and DELETE operations.
-- [ ] Due to the addition of multi-threading, you will need to handle mutual exclusion.
+- [x] You need to enable your client and server to communicate using Remote Procedure Calls (RPC) instead of sockets
+- [x] If you’ve implemeteamnted Project #1 in Java, you may want to look into and leverage Java RMI for RPC communication
+- [x] You need to make your server multi-threaded such that you can handle multiple outstanding client requests at once.
+- [x] The key result is that your servers should be able to handle requests from multiple running instances of you client doing concurrent PUT, GET, and DELETE operations.
+- [x] Due to the addition of multi-threading, you will need to handle mutual exclusion.
 
 ### Project 1 Remaining Requirements:
-- [ ] Make the client interactive
+- [x] Make the client interactive
 - [ ] Docker is optional, but not required
-- [ ] Follow directory structure from guidelines
+- [x] Follow directory structure from guidelines
 - [ ] Create a run_client.sh file
-- [ ] Your implementation may be written in Java
+- [x] Your implementation may be written in Java
 - [ ] Your source code should be well-factored and well-commented.
 - [ ] The client must take the following command line arguments hostname/IP and Port and protocol
 - [ ] The client should be robust to server failure by using a timeout mechanism
