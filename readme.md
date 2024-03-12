@@ -17,7 +17,6 @@
 - [x] Your implementation may be written in Java
 - [x] Your source code should be well-factored and well-commented.
 - [x] The client must take the following command line arguments hostname/IP and Port and protocol
-- [ ] The client should be robust to server failure by using a timeout mechanism
 - [x] if it does not receive a response to a particular request, you should note it in a client log and send the remaining requests
 - [x] You will have to design a simple protocol to communicate packet contents
 - [x] Three request types along with data passed along as part of the requests
