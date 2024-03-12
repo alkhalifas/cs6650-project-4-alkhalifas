@@ -11,9 +11,9 @@
 
 ### Project 1 Remaining Requirements:
 - [x] Make the client interactive
-- [ ] Docker is optional, but not required
+- [x] Docker is optional, but not required
 - [x] Follow directory structure from guidelines
-- [ ] Create a run_client.sh file
+- [x] Create a run_client.sh file
 - [x] Your implementation may be written in Java
 - [x] Your source code should be well-factored and well-commented.
 - [x] The client must take the following command line arguments hostname/IP and Port and protocol
@@ -60,7 +60,7 @@ Run the Client:
     cd src
     java client.ClientApp localhost 1099
 
-#### 2. Quick Start Scripts:
+#### 2. Quick Start Scripts (No Docker):
 
 Alternatively, you can run the .sh files instead:
 
@@ -70,14 +70,13 @@ Alternatively, you can run the .sh files instead:
     chmod +x run_client_no_docker.sh
     ./run_client_no_docker.sh
 
-#### 3. Run Docker:
+#### 3. Quick Start Scripts (With Docker):
 
     cd src
     sudo ./deploy.sh
-    sudo docker build -t project-1-client-image --target client-build .
+    sudo docker build -t project-2-client-image --target client-build .
 
-    sudo ./run_client.sh project-1-client-container 1111 tcp
-    sudo ./run_client.sh project-1-client-container 5555 udp
+    sudo ./run_client.sh project-2-client-container 1099
 
 
 ### Screen Shots:

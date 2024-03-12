@@ -1,5 +1,6 @@
 package server;
 
+import common.KeyValueInterface;
 import java.rmi.server.UnicastRemoteObject;
 import java.rmi.RemoteException;
 import java.util.concurrent.ConcurrentHashMap;
