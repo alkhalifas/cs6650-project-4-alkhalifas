@@ -21,14 +21,12 @@
 - [x] if it does not receive a response to a particular request, you should note it in a client log and send the remaining requests
 - [x] You will have to design a simple protocol to communicate packet contents
 - [x] Three request types along with data passed along as part of the requests
-- [ ] The client must be robust to malformed or unrequested datagram packets
-- [ ] If it receives such a datagram packet, it should report it in a human-readable way
-- [ ] Every line the client prints to the client log should be time-stamped with the current system time
-- [ ] You may format the time any way you like as long as your output maintains millisecond precision
-- [ ] You must have two instances of your client (or two separate clients)
-- [ ] The server must take the following command line arguments: port numbers for TCP and UDP
-- [ ] The server should run forever (until forcibly killed by an external signal, such as a Control-C
-- [ ] The server must display the requests received, and its responses, both in a human readable
+- [x] The client must be robust to malformed or unrequested datagram packets
+- [x] If it receives such a datagram packet, it should report it in a human-readable way
+- [x] Every line the client prints to the client log should be time-stamped with the current system time
+- [x] You may format the time any way you like as long as your output maintains millisecond precision
+- [x] The server should run forever (until forcibly killed by an external signal, such as a Control-C
+- [x] The server must display the requests received, and its responses, both in a human readable
 - [ ] that is, it must explicitly print to the server log that it received a query from a particular InetAddress and port number
 - [ ] The server must be robust to malformed datagram packets
 - [ ] If it receives a malformed datagram packet, it should report it in a human-readable way (length + address:port)
