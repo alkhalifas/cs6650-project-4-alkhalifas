@@ -27,14 +27,12 @@
 - [x] You may format the time any way you like as long as your output maintains millisecond precision
 - [x] The server should run forever (until forcibly killed by an external signal, such as a Control-C
 - [x] The server must display the requests received, and its responses, both in a human readable
-- [ ] that is, it must explicitly print to the server log that it received a query from a particular InetAddress and port number
-- [ ] The server must be robust to malformed datagram packets
-- [ ] If it receives a malformed datagram packet, it should report it in a human-readable way (length + address:port)
-- [ ] Every line the server prints to standard output or standard error must be time-stamped with the current system time (i.e., System.currentTimeMillis()).
-- [ ] You may format the time any way you like as long as your output maintains millisecond precision
-- [ ] You must have two instances of your server (or two separate servers)
-- [ ] You should use your client to pre-populate the Key-Value store with data and a set of keys.
-- [ ] Once the key-value store is populated, your client must do at least five of each operation: 5 PUTs, 5 GETs, 5 DELETEs.
+- [x] The server must be robust to malformed datagram packets
+- [x] If it receives a malformed datagram packet, it should report it in a human-readable way (length + address:port)
+- [x] Every line the server prints to standard output or standard error must be time-stamped with the current system time (i.e., System.currentTimeMillis()).
+- [x] You may format the time any way you like as long as your output maintains millisecond precision
+- [x] You should use your client to pre-populate the Key-Value store with data and a set of keys.
+- [x] Once the key-value store is populated, your client must do at least five of each operation: 5 PUTs, 5 GETs, 5 DELETEs.
 - [ ] Create an executive summary comprising “Assignment overview”, “technical impression”, and three use cases to apply this in practice.
 - [ ] “Assignment overview” (1 paragraph, up to about 250 words) explaining what you understand to be the purpose and scope of the assignment
 - [ ] “technical impression” (1–2 paragraphs, about 200–500 words) describing your experiences while carrying out the assignment.

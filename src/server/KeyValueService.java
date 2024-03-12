@@ -25,7 +25,12 @@ public class KeyValueService extends UnicastRemoteObject implements KeyValueInte
      * @param value
      */
     @Override
-    public void put(String key, String value) {
+    public void put(String key, String value) throws RemoteException {
+        if (key == null || key.isEmpty() || value == null) {
+            String errorMessage = "Malformed PUT request: Key and value must be non-null, key cannot be empty. Key: '" + key + "', Value: '" + value + "'.";
+            ServerLogger.log(errorMessage);
+            throw new RemoteException(errorMessage);
+        }
         dataStore.put(key, value);
         ServerLogger.log("PUT operation - Key: " + key + ", Value: " + value);
     }
@@ -35,7 +40,12 @@ public class KeyValueService extends UnicastRemoteObject implements KeyValueInte
      * @param key
      */
     @Override
-    public String get(String key) {
+    public String get(String key) throws RemoteException {
+        if (key == null || key.isEmpty()) {
+            String errorMessage = "Malformed GET request: Key must be non-null and cannot be empty. Key: '" + key + "'.";
+            ServerLogger.log(errorMessage);
+            throw new RemoteException(errorMessage);
+        }
         String value = dataStore.get(key);
         ServerLogger.log("GET operation - Key: " + key + ", Value: " + value);
         return value;
@@ -46,7 +56,12 @@ public class KeyValueService extends UnicastRemoteObject implements KeyValueInte
      * @param key
      */
     @Override
-    public void delete(String key) {
+    public void delete(String key) throws RemoteException {
+        if (key == null || key.isEmpty()) {
+            String errorMessage = "Malformed DELETE request: Key must be non-null and cannot be empty. Key: '" + key + "'.";
+            ServerLogger.log(errorMessage);
+            throw new RemoteException(errorMessage);
+        }
         dataStore.remove(key);
         ServerLogger.log("DELETE operation - Key: " + key);
     }
