@@ -15,12 +15,12 @@
 - [x] Follow directory structure from guidelines
 - [ ] Create a run_client.sh file
 - [x] Your implementation may be written in Java
-- [ ] Your source code should be well-factored and well-commented.
-- [ ] The client must take the following command line arguments hostname/IP and Port and protocol
+- [x] Your source code should be well-factored and well-commented.
+- [x] The client must take the following command line arguments hostname/IP and Port and protocol
 - [ ] The client should be robust to server failure by using a timeout mechanism
-- [ ] if it does not receive a response to a particular request, you should note it in a client log and send the remaining requests
-- [ ] You will have to design a simple protocol to communicate packet contents
-- [ ] Three request types along with data passed along as part of the requests
+- [x] if it does not receive a response to a particular request, you should note it in a client log and send the remaining requests
+- [x] You will have to design a simple protocol to communicate packet contents
+- [x] Three request types along with data passed along as part of the requests
 - [ ] The client must be robust to malformed or unrequested datagram packets
 - [ ] If it receives such a datagram packet, it should report it in a human-readable way
 - [ ] Every line the client prints to the client log should be time-stamped with the current system time

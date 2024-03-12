@@ -45,6 +45,7 @@ public class ClientApp {
      */
     private static void prepopulateClient() throws Exception {
         ClientLogger.log("ClientApp: Populating Data Store");
+        ClientLogger.log("ClientApp: Running 5 of each operation:");
 
         // Examples of PUT for pre-population
         logAndExecutePut("school", "northeastern");
@@ -52,6 +53,20 @@ public class ClientApp {
         logAndExecutePut("height", "6ft");
         logAndExecutePut("phone", "1234567890");
         logAndExecutePut("email", "somewhere@gmail.com");
+
+        logAndExecuteGet("school");
+        logAndExecuteGet("pet");
+        logAndExecuteGet("height");
+        logAndExecuteGet("email");
+        logAndExecuteGet("phone");
+
+        logAndExecuteDelete("pet");
+        logAndExecuteDelete("school");
+        logAndExecuteDelete("email");
+        logAndExecuteDelete("height");
+        logAndExecuteDelete("phone");
+
+
     }
 
     /**
@@ -59,26 +74,35 @@ public class ClientApp {
      * @throws Exception
      */
     private static void performClientOperations() throws Exception {
-        ClientLogger.log("ClientApp: Running 5 of each operation");
+        ClientLogger.log("ClientApp: Running tests on edge cases");
 
-        // PUT Method Examples
+        // PUT Methods to populate
         logAndExecutePut("firstname", "saleh");
         logAndExecutePut("lastname", "alkhalifa");
         logAndExecutePut("tvshow", "seinfeld");
         logAndExecutePut("zipcode", "02148");
         logAndExecutePut("job", "datascientist");
+        logAndExecutePut("home", "malden");
 
-        // GET Method Examples
+        // Put methods on same key
+        logAndExecutePut("firstname", "saleh");
+        logAndExecutePut("firstname", "saleh");
+
+        // GET Method Examples on same key
         logAndExecuteGet("firstname");
-        logAndExecuteGet("lastname");
-        logAndExecuteGet("job");
+        logAndExecuteGet("firstname");
 
-        // DELETE Method Examples
+        // Get key that does not exist
+        logAndExecuteGet("drink"); // Does not exist!!
+
+        // Delete key then get it:
+        logAndExecutePut("firstname", "saleh");
         logAndExecuteDelete("firstname");
-        logAndExecuteDelete("lastname");
-        logAndExecuteDelete("tvshow");
-        logAndExecuteDelete("zipcode");
-        logAndExecuteDelete("job");
+        logAndExecuteGet("firstname");
+
+        // Delete non-existent key:
+        logAndExecuteDelete("123123123");
+
     }
 
     /**
@@ -88,11 +112,14 @@ public class ClientApp {
 
         // Start scanner to parse input from user
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Interactive session started. Type 'PUT <key> <value>', 'GET <key>', 'DELETE <key>', or 'QUIT' to exit.");
+        ClientLogger.log("############################");
+        ClientLogger.log("Interactive session started.");
+        ClientLogger.log("Type 'PUT <key> <value>', 'GET <key>', 'DELETE <key>', or 'QUIT' to exit.");
+        ClientLogger.log("############################");
 
         while (true) {
             // Get users command and run it, move to next line
-            System.out.print("Enter command: ");
+            System.out.print("> Enter Command: ");
             String input = scanner.nextLine();
 
             // Check if user wants to quit
@@ -118,7 +145,7 @@ public class ClientApp {
                 case "PUT":
                     // Check for invalid input
                     if (parts.length < 3) {
-                        System.out.println("Invalid PUT command. Correct usage: PUT <key> <value>");
+                        ClientLogger.log("Invalid PUT command. Correct usage: PUT <key> <value>");
                     } else {
                         logAndExecutePut(parts[1], parts[2]);
                     }
@@ -126,7 +153,7 @@ public class ClientApp {
                 case "GET":
                     // Check for invalid input
                     if (parts.length < 2) {
-                        System.out.println("Invalid GET command. Correct usage: GET <key>");
+                        ClientLogger.log("Invalid GET command. Correct usage: GET <key>");
                     } else {
                         logAndExecuteGet(parts[1]);
                     }
@@ -134,13 +161,13 @@ public class ClientApp {
                 case "DELETE":
                     // Check for invalid input
                     if (parts.length < 2) {
-                        System.out.println("Invalid DELETE command. Correct usage: DELETE <key>");
+                        ClientLogger.log("Invalid DELETE command. Correct usage: DELETE <key>");
                     } else {
                         logAndExecuteDelete(parts[1]);
                     }
                     break;
                 default:
-                    System.out.println("Unsupported command. Use PUT, GET, DELETE, or QUIT.");
+                    ClientLogger.log("Unsupported command or Malformed data packet detected. Use PUT, GET, DELETE, followed by keys and valies, or QUIT.");
                     break;
             }
         } catch (Exception e) {
@@ -168,7 +195,7 @@ public class ClientApp {
     private static void logAndExecuteGet(String key) throws Exception {
         String value = service.get(key);
         ClientLogger.log("GET - Key: " + key + ", Value: " + value);
-        System.out.println("Value: " + value);
+//        System.out.println("Value: " + value);
     }
 
     /**
