@@ -4,7 +4,7 @@
 
 ### Project 2 New Requirements:
 - [x] You need to enable your client and server to communicate using Remote Procedure Calls (RPC) instead of sockets
-- [x] If you’ve implemeteamnted Project #1 in Java, you may want to look into and leverage Java RMI for RPC communication
+- [x] If you’ve implemented Project #1 in Java, you may want to look into and leverage Java RMI for RPC communication
 - [x] You need to make your server multi-threaded such that you can handle multiple outstanding client requests at once.
 - [x] The key result is that your servers should be able to handle requests from multiple running instances of you client doing concurrent PUT, GET, and DELETE operations.
 - [x] Due to the addition of multi-threading, you will need to handle mutual exclusion.
@@ -32,11 +32,11 @@
 - [x] You may format the time any way you like as long as your output maintains millisecond precision
 - [x] You should use your client to pre-populate the Key-Value store with data and a set of keys.
 - [x] Once the key-value store is populated, your client must do at least five of each operation: 5 PUTs, 5 GETs, 5 DELETEs.
-- [ ] Create an executive summary comprising “Assignment overview”, “technical impression”, and three use cases to apply this in practice.
-- [ ] “Assignment overview” (1 paragraph, up to about 250 words) explaining what you understand to be the purpose and scope of the assignment
-- [ ] “technical impression” (1–2 paragraphs, about 200–500 words) describing your experiences while carrying out the assignment.
-- [ ] Provide a use case (application) 3 where you would apply this in practice.
-- [ ] Attach screenshots of your testing done on your local environment.
+- [x] Create an executive summary comprising “Assignment overview”, “technical impression”, and three use cases to apply this in practice.
+- [x] “Assignment overview” (1 paragraph, up to about 250 words) explaining what you understand to be the purpose and scope of the assignment
+- [x] “technical impression” (1–2 paragraphs, about 200–500 words) describing your experiences while carrying out the assignment.
+- [x] Provide a use case (application) 3 where you would apply this in practice.
+- [x] Attach screenshots of your testing done on your local environment.
 
 
 ### Instructions:
@@ -81,20 +81,23 @@ Alternatively, you can run the .sh files instead:
 
 ### Screen Shots:
 
-Starting the server:
-![Starting Server](artifacts/server_start.png "server_start")
+Starting the Client:
+![Starting Server](artifacts/client_start_log.png "Client Start")
 
-Running Client Executable:
-![Client Start](artifacts/run_client_start.png "Client Start")
+Starting the Server:
+![Client Start](artifacts/server_start_log.png "Server Start")
 
-End of the Client Executable:
-![Client End](artifacts/run_client_end.png "Client End")
+Client Logs:
+![Client End](artifacts/client_logs.png "Client Logs")
 
 Server Logs:
 ![Server Logs](artifacts/server_logs.png "Server Logs")
 
-Docker Server Logs:
-![Docker Server Logs](artifacts/docker_server.png "Docker Server Logs")
+Docker Containers:
+![Server Logs](artifacts/docker_containers.png "Docker Containers")
 
-Docker Client Output:
-![Docker Client Logs](artifacts/docker_client_output.png "Docker Client Logs")
+Docker Server Logs:
+![Docker Server Logs](artifacts/server_docker_logs.png "Docker Server Logs")
+
+Docker Client Logs:
+![Docker Client Logs](artifacts/client_docker_logs.png "Docker Client Logs")
