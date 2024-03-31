@@ -2,7 +2,8 @@ package server;
 
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
-
+import java.util.ArrayList;
+import java.util.List;
 /**
  * ServerApp containing the backend logic, as well registry and KV service
  */

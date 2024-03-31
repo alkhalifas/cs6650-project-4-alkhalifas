@@ -24,6 +24,7 @@ public class ClientApp {
             Registry registry = LocateRegistry.getRegistry(host, rmiPort);
             service = (KeyValueInterface) registry.lookup("KeyValueService");
 
+
             // Pre-populate the key-value store
             prepopulateClient();
 
