@@ -4,6 +4,7 @@ import common.KeyValueInterface;
 import java.rmi.server.UnicastRemoteObject;
 import java.rmi.RemoteException;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.TimeUnit;
 
 /*
  Key Val Service to extend UnicastRemoteObject that uses hashmap with logging
@@ -26,14 +27,23 @@ public class KeyValueService extends UnicastRemoteObject implements KeyValueInte
      * @param value
      */
     @Override
-    public void put(String key, String value) throws RemoteException {
+    public synchronized void put(String key, String value) throws RemoteException {
         if (key == null || key.isEmpty() || value == null) {
             String errorMessage = "Malformed PUT request: Key and value must be non-null, key cannot be empty. Key: '" + key + "', Value: '" + value + "'.";
             ServerLogger.log(errorMessage);
             throw new RemoteException(errorMessage);
         }
-        dataStore.put(key, value);
-        ServerLogger.log("PUT operation - Key: " + key + ", Value: " + value);
+
+        // Phase 1: Prepare phase
+        boolean prepareSuccess = preparePhase(key, value);
+
+        if (prepareSuccess) {
+            // Phase 2: Commit phase
+            commitPhase(key, value);
+            ServerLogger.log("PUT operation - Key: " + key + ", Value: " + value);
+        } else {
+            ServerLogger.log("PUT operation aborted - Key: " + key + ", Value: " + value);
+        }
     }
 
     /**
