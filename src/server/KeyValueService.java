@@ -51,7 +51,7 @@ public class KeyValueService extends UnicastRemoteObject implements KeyValueInte
      * @param key
      */
     @Override
-    public String get(String key) throws RemoteException {
+    public synchronized String get(String key) throws RemoteException {
         if (key == null || key.isEmpty()) {
             String errorMessage = "Malformed GET request: Key must be non-null and cannot be empty. Key: '" + key + "'.";
             ServerLogger.log(errorMessage);
