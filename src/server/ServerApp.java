@@ -9,7 +9,6 @@ import java.util.List;
  */
 public class ServerApp {
     public static void main(String[] args) {
-
         try {
             // Set default port
             int port = 1099;
@@ -24,26 +23,15 @@ public class ServerApp {
                 }
             }
 
-            // Create and bind instances of KeyValueService on multiple servers to adhere to reqs of prj3
-            // Prj3 new change
-            List<KeyValueService> services = new ArrayList<>();
+            // Create and bind instances of KeyValueService on a single registry with different names
+            Registry registry = LocateRegistry.createRegistry(port);
 
-            // Iterate over the services to spin them up
-            for (int i = 0; i < 5; i++) {
-                // Create a new instance of the service
+            // Bind each server replica with a unique name
+            for (int i = 1; i <= 5; i++) {
                 KeyValueService service = new KeyValueService();
-
-                // Use the specified port or default (1099)
-                Registry registry = LocateRegistry.createRegistry(port + i);
-
-                // Rebind registry
-                registry.rebind("KeyValueService", service);
-
-                // add it to the service
-                services.add(service);
-
-                // Log to the logger
-                ServerLogger.log("Key-Value Store Service is running on port " + (port + i));
+                String serverName = "KeyValueServer" + i;
+                registry.rebind(serverName, service);
+                ServerLogger.log("Key-Value Store Service " + serverName + " is running on port " + port);
             }
         } catch (Exception e) {
             ServerLogger.log("Server exception: " + e.toString());
