@@ -1,30 +1,26 @@
+// ClientApp.java
 package client;
 
-import common.KeyValueService;
-
-import java.rmi.NotBoundException;
+import common.KeyValueInterface;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.Random;
 import java.util.Scanner;
 
-/**
- * Client app that uses an RMI registry to handle communication with backend.
- */
 public class ClientApp {
-    private static final String[] SERVER_NAMES = {"KeyValueService1", "KeyValueService2", "KeyValueService3", "KeyValueService4", "KeyValueService5"};
-    private static KeyValueService[] services;
+    private static final String[] SERVER_NAMES = {"KeyValueServer1", "KeyValueServer2", "KeyValueServer3", "KeyValueServer4", "KeyValueServer5"};
+    private static KeyValueInterface[] services;
 
     public static void main(String[] args) {
         try {
             String host = args.length > 0 ? args[0] : "localhost";
             Registry registry = LocateRegistry.getRegistry(host);
 
-            services = new KeyValueService[5];
+            services = new KeyValueInterface[5]; // Use KeyValueInterface instead of KeyValueService
 
             for (int i = 0; i < 5; i++) {
-                services[i] = (KeyValueService) registry.lookup(SERVER_NAMES[i]);
+                services[i] = (KeyValueInterface) registry.lookup(SERVER_NAMES[i]); // Cast to KeyValueInterface
             }
 
             ClientLogger.log("Successfully connected to the server.");
@@ -37,9 +33,6 @@ public class ClientApp {
         }
     }
 
-    /**
-     * Method that starts an interactive session via infinite loop until loop is killed
-     */
     private static void interactiveSession() {
         Scanner scanner = new Scanner(System.in);
         ClientLogger.log("Interactive session started.");
@@ -60,16 +53,12 @@ public class ClientApp {
         scanner.close();
     }
 
-    /**
-     * Method that handles the different methods of PUT, GET, and DELETE,
-     * sending each command to a different KVServer.
-     */
     private static void handleCommand(String command) {
         try {
             String[] parts = command.split(" ", 3);
             Random random = new Random();
             int randomServerIndex = random.nextInt(5);
-            KeyValueService service = services[randomServerIndex];
+            KeyValueInterface service = services[randomServerIndex]; // Use KeyValueInterface
 
             switch (parts[0].toUpperCase()) {
                 case "PUT":
@@ -102,5 +91,4 @@ public class ClientApp {
             ClientLogger.log("RemoteException while handling command: " + command + " - " + e.getMessage());
         }
     }
-
 }
