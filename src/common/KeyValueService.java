@@ -26,16 +26,18 @@ public class KeyValueService extends UnicastRemoteObject implements KeyValueInte
         }
 
         synchronized (this) {
-            boolean prepareSuccess = preparedKeys.contains(key);
-            if (prepareSuccess) {
-                dataStore.put(key, value);
-                preparedKeys.remove(key);
-                ServerLogger.log("PUT operation - Key: " + key + ", Value: " + value);
-            } else {
-                ServerLogger.log("PUT operation aborted - Key: " + key + ", Value: " + value);
-            }
+            // Perform any necessary preparation steps before putting the key-value pair
+            preparePhase(key);
+
+            // Now, put the key-value pair into the data store
+            dataStore.put(key, value);
+            ServerLogger.log("PUT operation - Key: " + key + ", Value: " + value);
+
+            // Log the content of the data store
+            ServerLogger.log("Data Store content after PUT: " + dataStore);
         }
     }
+
 
     @Override
     public String get(String key) throws RemoteException {
@@ -43,10 +45,23 @@ public class KeyValueService extends UnicastRemoteObject implements KeyValueInte
             ServerLogger.log("Malformed GET request: Key must be non-null and cannot be empty. Key: '" + key + "'.");
             return null;
         }
+
+        // Prepare the key
+        preparePhase(key);
+
+        // Now check if the key is prepared
+        boolean prepareSuccess = preparedKeys.contains(key);
+        if (!prepareSuccess) {
+            ServerLogger.log("GET operation aborted - Key: " + key + " - Key not prepared.");
+            return null;
+        }
+
         String value = dataStore.get(key);
         ServerLogger.log("GET operation - Key: " + key + ", Value: " + value);
         return value;
     }
+
+
 
     @Override
     public void delete(String key) throws RemoteException {

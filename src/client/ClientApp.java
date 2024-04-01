@@ -21,6 +21,7 @@ public class ClientApp {
 
             for (int i = 0; i < 5; i++) {
                 services[i] = (KeyValueInterface) registry.lookup(SERVER_NAMES[i]); // Cast to KeyValueInterface
+                ClientLogger.log("Successfully found." + i + "service");
             }
 
             ClientLogger.log("Successfully connected to the server.");
