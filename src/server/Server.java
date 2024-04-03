@@ -171,7 +171,7 @@ public class Server extends UnicastRemoteObject implements IServer, ServerServic
       translation = this.dictionary.get(key);
       this.logger.log("> Returned the value \"" + translation + "\" associated with \"" + key + "\"");
     } else { // if the key doesn't exist
-      translation = "> Error: Unknown operation for " + "\"" + key + "\"" + " yet";
+      translation = "> Error: Unknown item for " + "\"" + key + "\"";
       this.logger.log("> Error: no value is associated with \"" + key + "\"");
     }
     return translation;

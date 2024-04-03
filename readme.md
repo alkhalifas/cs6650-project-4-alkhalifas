@@ -3,16 +3,16 @@
 ### Spring 2024
 
 ### Project 3 New Requirements:
-- [ ] Replicate your Key-Value Store Server across 5 distinct servers.
-- [ ] to increase Server bandwidth and ensure availability, you need to replicate your key-value store at each of 5 different instances of your servers.
-- [ ] Note that your client code should not have to change radically
-- [ ] Clients should be able to contact any of the five KV replica servers instead of a single server and get consistent data back from any of the replicas (in the case of GETs).
-- [ ] You client should also be able to issue PUT operations and DELETE operations to any of the five replicas.
-- [ ] On PUT or DELETE operations you need to ensure each of the replicated KV stores at each replica is consistent.
-- [ ] To do this, you need to implement a two-phase protocol for updates.
-- [ ] We will assume no servers will fail such that 2 Phase Commit will not stall
-- [ ] Although you may want to defensively code your 2PC protocol with timeouts to be sure.
-- [ ] Consequently, whenever a client issues a PUT or a DELETE to *any* server replica, that receiving replica will ensure the updates have been received (via ACKs) and commited (via Go messages with accompanying ACKs).
+- [X] Replicate your Key-Value Store Server across 5 distinct servers.
+- [X] to increase Server bandwidth and ensure availability, you need to replicate your key-value store at each of 5 different instances of your servers.
+- [X] Note that your client code should not have to change radically
+- [X] Clients should be able to contact any of the five KV replica servers instead of a single server and get consistent data back from any of the replicas (in the case of GETs).
+- [X] You client should also be able to issue PUT operations and DELETE operations to any of the five replicas.
+- [X] On PUT or DELETE operations you need to ensure each of the replicated KV stores at each replica is consistent.
+- [X] To do this, you need to implement a two-phase protocol for updates.
+- [X] We will assume no servers will fail such that 2 Phase Commit will not stall
+- [X] Although you may want to defensively code your 2PC protocol with timeouts to be sure.
+- [X] Consequently, whenever a client issues a PUT or a DELETE to *any* server replica, that receiving replica will ensure the updates have been received (via ACKs) and commited (via Go messages with accompanying ACKs).
 ### Project 1 & 2 Remaining Requirements:
 - [x] You need to enable your client and server to communicate using Remote Procedure Calls (RPC) instead of sockets
 - [x] If you’ve implemented Project #1 in Java, you may want to look into and leverage Java RMI for RPC communication
@@ -20,7 +20,7 @@
 - [x] The key result is that your servers should be able to handle requests from multiple running instances of you client doing concurrent PUT, GET, and DELETE operations.
 - [x] Due to the addition of multi-threading, you will need to handle mutual exclusion.
 - [x] Make the client interactive
-- [x] Docker is optional, but not required
+- [ ] Docker is optional, but not required
 - [x] Follow directory structure from guidelines
 - [x] Create a run_client.sh file
 - [x] Your implementation may be written in Java

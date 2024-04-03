@@ -44,21 +44,24 @@ public class Client implements IClient {
      * Instantiates a new Client.
      */
     public Client() {
-        this.logger = new Logger(loggerName, logFileName); // instantiate a logging system that already is thread-safe
-        this.scanner = new Scanner(System.in); // instantiate an object to get user input
+        // Thread safe loggers
+        this.logger = new Logger(loggerName, logFileName);
+        this.scanner = new Scanner(System.in);
         this.replicaHosts = new ArrayList<>();
         this.replicaPorts = new ArrayList<>();
+
         // Adding server hosts and ports to the lists
-        this.replicaHosts.add(host1); // server 1
-        this.replicaHosts.add(host1); // server 2
-        this.replicaHosts.add(host1); // server 3
-        this.replicaHosts.add(host1); // server 4
-        this.replicaHosts.add(host1); // server 5
-        this.replicaPorts.add(port1); // server 1's port number
-        this.replicaPorts.add(port2); // server 2's port number
-        this.replicaPorts.add(port3); // server 3's port number
-        this.replicaPorts.add(port4); // server 4's port number
-        this.replicaPorts.add(port5); // server 5's port number
+        this.replicaHosts.add(host1);
+        this.replicaHosts.add(host1);
+        this.replicaHosts.add(host1);
+        this.replicaHosts.add(host1);
+        this.replicaHosts.add(host1);
+        this.replicaPorts.add(port1);
+        this.replicaPorts.add(port2);
+        this.replicaPorts.add(port3);
+        this.replicaPorts.add(port4);
+        this.replicaPorts.add(port5);
+
         // Timeout mechanism
         System.setProperty("sun.rmi.transport.tcp.responseTimeout", "2000");
         System.setProperty("sun.rmi.transport.proxy.connectTimeout", "5000");
@@ -135,6 +138,7 @@ public class Client implements IClient {
             System.out.println(this.server.delete("drink"));
 
 
+            // Give user feedback on the status of the KV store
             this.logger.log("> Pre-population of KV store completed");
             System.out.println("> Pre-population of KV store completed");
             Thread.sleep(1000); // wait a second before user interaction
@@ -159,7 +163,8 @@ public class Client implements IClient {
      */
     @Override
     public String getRequest() {
-        System.out.print("Enter operation (PUT/GET/DELETE:key:value[only with PUT]): ");
+        System.out.print("-------------------------------------------------------------\n");
+        System.out.print("> Enter operation (PUT/GET/DELETE:key:value[only with PUT]): ");
         return this.scanner.nextLine();
     }
 
@@ -168,22 +173,22 @@ public class Client implements IClient {
         String result;
         String[] elements = request.split(":");
         if (elements.length < 2 || elements.length > 3) { // the protocol is not followed
-            this.logger.log("Received malformed request: " + request);
-            return "FAIL: please follow the predefined protocol PUT/GET/DELETE:key:value[with PUT only] and try again";
+            this.logger.log("> Error: Received malformed request: " + request);
+            return "> Error: please follow the predefined protocol PUT/GET/DELETE:key:value[with PUT only] and try again";
         } else {
             String operation;
             try {
                 operation = elements[0].toUpperCase(); // PUT/GET/DELETE
             } catch (Exception e) {
-                this.logger.log("Parsing error: invalid operation");
-                return "FAIL: could not parse the operation requested. Please follow the predefined protocol PUT/GET/DELETE:key:value[with PUT only] and try again";
+                this.logger.log("> Parsing error: invalid operation");
+                return "> Error: could not parse the operation requested. Please follow the predefined protocol PUT/GET/DELETE:key:value[with PUT only] and try again";
             }
             String key;
             try {
                 key = elements[1].toLowerCase(); // word to be translated
             } catch (Exception e) {
-                this.logger.log("Parsing error: invalid key");
-                return "FAIL: could not parse the key requested. Please follow the predefined protocol PUT/GET/DELETE:key:value[with PUT only] and try again";
+                this.logger.log("> Parsing error: invalid key");
+                return "> Error: could not parse the key requested. Please follow the predefined protocol PUT/GET/DELETE:key:value[with PUT only] and try again";
             }
             String value;
             try {
@@ -191,32 +196,32 @@ public class Client implements IClient {
                     case "PUT":
                         try {
                             value = elements[2].toLowerCase(); // word to translate
-                            this.logger.log("Received a request to save " + "\"" + key + "\"" + " mapped to " + "\"" + value + "\"");
+                            this.logger.log("> Received a request to save " + "\"" + key + "\"" + " mapped to " + "\"" + value + "\"");
                         } catch (Exception e) {
-                            this.logger.log("Parsing error: invalid value");
-                            return "FAIL: could not parse the value requested. Please follow the predefined protocol PUT/GET/DELETE:key:value[with PUT only] and try again";
+                            this.logger.log("> Parsing error: invalid value");
+                            return "> Error: could not parse the value requested. Please follow the predefined protocol PUT/GET/DELETE:key:value[with PUT only] and try again";
                         }
                         result = this.server.put(key, value);
                         break;
                     case "GET":
                         result = this.server.get(key);
-                        if (result.startsWith("FAIL:")) {
-                            this.logger.log("Received a request to retrieve the value mapped to a nonexistent key: \"" + key + "\"");
+                        if (result.startsWith("> Error:")) {
+                            this.logger.log("> Error: Received a request to retrieve the value mapped to a nonexistent key: \"" + key + "\"");
                         } else {
-                            this.logger.log("Received a request to retrieve the value mapped to \"" + key + "\"");
+                            this.logger.log("> Received a request to retrieve the value mapped to \"" + key + "\"");
                         }
                         break;
                     case "DELETE":
                         result = this.server.delete(key);
-                        if (result.startsWith("FAIL:")) {
-                            this.logger.log("Received a request to delete a nonexistent key-value pair associated with the key: \"" + key + "\"");
+                        if (result.startsWith("> Error:")) {
+                            this.logger.log("> Received a request to delete a nonexistent key-value pair associated with the key: \"" + key + "\"");
                         } else {
-                            this.logger.log("Received a request to delete the key-value pair associated with the key: \"" + key + "\"");
+                            this.logger.log("> Received a request to delete the key-value pair associated with the key: \"" + key + "\"");
                         }
                         break;
                     default: // invalid request
-                        this.logger.log("Received an invalid request: " + request);
-                        return "Invalid request. Please follow the predefined protocol PUT/GET/DELETE:key:value[with PUT only] and try again";
+                        this.logger.log("> Error: Received an invalid request: " + request);
+                        return "> Error: Invalid request. Please follow the predefined protocol PUT/GET/DELETE:key:value[with PUT only] and try again";
                 }
             } catch (ConnectException ce) { // connection times out
                 this.logger.log("ServerService timed out: " + ce.getMessage());
