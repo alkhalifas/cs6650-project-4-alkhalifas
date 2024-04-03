@@ -1,0 +1,44 @@
+04-03-2024 18:06:31.886 - > Established connection to the remote object Registry on the host localhost and port 1100 created
+04-03-2024 18:06:31.887 - > Established Connection bound to Coordinator in the remote object Registry
+04-03-2024 18:06:35.577 - ready
+04-03-2024 18:06:35.580 - SUCCESS: added the key "name" associated with "saleh"
+04-03-2024 18:06:35.588 - ready
+04-03-2024 18:06:35.592 - SUCCESS: added the key "color" associated with "blue"
+04-03-2024 18:06:35.599 - ready
+04-03-2024 18:06:35.601 - SUCCESS: added the key "thank you" associated with "grazie"
+04-03-2024 18:06:35.608 - ready
+04-03-2024 18:06:35.610 - SUCCESS: added the key "please" associated with "per favore"
+04-03-2024 18:06:35.615 - ready
+04-03-2024 18:06:35.616 - SUCCESS: added the key "yes" associated with "sì"
+04-03-2024 18:06:35.620 - ready
+04-03-2024 18:06:35.622 - SUCCESS: added the key "no" associated with "no"
+04-03-2024 18:06:35.626 - ready
+04-03-2024 18:06:35.628 - SUCCESS: added the key "water" associated with "acqua"
+04-03-2024 18:06:35.631 - ready
+04-03-2024 18:06:35.633 - SUCCESS: added the key "food" associated with "cibo"
+04-03-2024 18:06:35.636 - ready
+04-03-2024 18:06:35.638 - SUCCESS: added the key "friend" associated with "amico"
+04-03-2024 18:06:35.641 - ready
+04-03-2024 18:06:35.642 - SUCCESS: added the key "love" associated with "amore"
+04-03-2024 18:10:40.361 - > Established connection to the remote object Registry on the host localhost and port 1100 created
+04-03-2024 18:10:40.362 - > Established Connection bound to Coordinator in the remote object Registry
+04-03-2024 18:10:52.168 - ready
+04-03-2024 18:10:52.171 - > Added the key "name" associated with "saleh"
+04-03-2024 18:10:52.177 - ready
+04-03-2024 18:10:52.179 - > Added the key "color" associated with "blue"
+04-03-2024 18:10:52.184 - ready
+04-03-2024 18:10:52.186 - > Added the key "thank you" associated with "grazie"
+04-03-2024 18:10:52.191 - ready
+04-03-2024 18:10:52.193 - > Added the key "please" associated with "per favore"
+04-03-2024 18:10:52.197 - ready
+04-03-2024 18:10:52.199 - > Added the key "yes" associated with "sì"
+04-03-2024 18:10:52.205 - ready
+04-03-2024 18:10:52.207 - > Added the key "no" associated with "no"
+04-03-2024 18:10:52.211 - ready
+04-03-2024 18:10:52.212 - > Added the key "water" associated with "acqua"
+04-03-2024 18:10:52.216 - ready
+04-03-2024 18:10:52.218 - > Added the key "food" associated with "cibo"
+04-03-2024 18:10:52.221 - ready
+04-03-2024 18:10:52.223 - > Added the key "friend" associated with "amico"
+04-03-2024 18:10:52.226 - ready
+04-03-2024 18:10:52.227 - > Added the key "love" associated with "amore"

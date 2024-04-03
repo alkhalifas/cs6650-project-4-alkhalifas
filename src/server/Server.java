@@ -55,25 +55,25 @@ public class Server extends UnicastRemoteObject implements IServer, ServerServic
     try {
       // Connect to the coordinator
       this.registry = LocateRegistry.getRegistry(coordinatorHost, coordinatorPort);
-      this.logger.log("> Connection to the remote object Registry on the host " + coordinatorHost + " and port " + coordinatorPort + " created");
+      this.logger.log("> Established connection to the remote object Registry on the host " + coordinatorHost + " and port " + coordinatorPort + " created");
       this.coordinator = (ICoordinator) registry.lookup(coordinatorService);
-      this.logger.log("> Connection bound to Coordinator in the remote object Registry");
+      this.logger.log("> Established Connection bound to Coordinator in the remote object Registry");
     } catch (ConnectException ce) { // connection times out
-      this.logger.log("> Connection to coordinator " + coordinatorHost + " at port " + coordinatorPort + " timed out: " + ce.getMessage());
-      throw new RemoteException("Connection to coordinator " + coordinatorHost + " at port " + coordinatorPort + " timed out", ce);
+      this.logger.log("> Established Connection to coordinator " + coordinatorHost + " at port " + coordinatorPort + " timed out: " + ce.getMessage());
+      throw new RemoteException("Established Connection to coordinator " + coordinatorHost + " at port " + coordinatorPort + " timed out", ce);
     } catch (Exception e) { // general error
-      this.logger.log("> Unable to connect to coordinator " + coordinatorHost + " at port " + coordinatorPort + ": " + e.getMessage());
-      throw new RemoteException("Unable to connect to coordinator " + coordinatorHost + " at port " + coordinatorPort, e);
+      this.logger.log("> Unable to establish connection to coordinator " + coordinatorHost + " at port " + coordinatorPort + ": " + e.getMessage());
+      throw new RemoteException("Unable to establish connection to coordinator " + coordinatorHost + " at port " + coordinatorPort, e);
     }
   }
 
-  // Simulates an abort scenario by generating a random number between 0 and 100 and comparing it against the "abort number".
-  private void simulateAbort() {
-    Random random = new Random();
-    int randomNumber = random.nextInt(randomNumBound);
-    this.logger.log("The random number is: " + randomNumber);
-    this.canCommit = randomNumber != abortNumber;
-  }
+//   Simulates an abort scenario by generating a random number between 0 and 100 and comparing it against the "abort number".
+//  private void simulateAbort() {
+//    Random random = new Random();
+//    int randomNumber = random.nextInt(randomNumBound);
+//    this.logger.log("The random number is: " + randomNumber);
+//    this.canCommit = randomNumber != abortNumber;
+//  }
 
   /**
    * Performs the first phase of the two-phase commit protocol.
@@ -88,16 +88,18 @@ public class Server extends UnicastRemoteObject implements IServer, ServerServic
     if (operation.equals("PUT")) {
       if (this.dictionary.containsKey(key)) { // if the key is already in the store
         this.canCommit = false; // abort
-        this.logger.log("FAIL: the translation for \"" + key + "\" already exists");
+        this.logger.log("> Error: the put operation for \"" + key + "\" already exists");
       } else {
-        this.simulateAbort(); // 1/101 chances to abort
+        this.canCommit = true;
+//        this.simulateAbort(); // 1/101 chances to abort
       }
     } else if (operation.equals("DELETE")) {
       if (this.dictionary.containsKey(key)) {
-        this.simulateAbort(); // 1/101 chances to abort
+        this.canCommit = true;
+//        this.simulateAbort(); // 1/101 chances to abort
       } else { // if the key doesn't exist
         this.canCommit = false; // abort
-        this.logger.log("FAIL: " + "\"" + key + "\" does not exist");
+        this.logger.log("> Error: " + "\"" + key + "\" does not exist");
       }
     }
     if (this.canCommit) {
@@ -120,7 +122,7 @@ public class Server extends UnicastRemoteObject implements IServer, ServerServic
   @Override
   public void commit(String key, String value) throws RemoteException { // overloaded method that performs the put operation
     this.dictionary.put(key, value);
-    this.logger.log("SUCCESS: added the key \"" + key + "\" associated with \"" + value + "\"");
+    this.logger.log("> Added the key \"" + key + "\" associated with \"" + value + "\"");
     this.state = "INITIAL";
   }
 
@@ -133,7 +135,7 @@ public class Server extends UnicastRemoteObject implements IServer, ServerServic
   @Override
   public void commit(String key) throws RemoteException { // overloaded method that performs the delete operation
     this.dictionary.remove(key);
-    this.logger.log("SUCCESS: deleted the key-value pair associated with \"" + key + "\"");
+    this.logger.log("> Deleted the key-value pair associated with \"" + key + "\"");
     this.state = "INITIAL";
   }
 
@@ -149,16 +151,16 @@ public class Server extends UnicastRemoteObject implements IServer, ServerServic
   public String put(String key, String value) throws RemoteException {
     try {
       if (!this.coordinator.prepareTransaction("PUT", key, value)) {
-        return "FAIL: the translation for \"" + key + "\" already exists or the transaction aborted";
+        return "> Error: the operation for \"" + key + "\" already exists or the transaction aborted";
       } else {
-        return "SUCCESS";
+        return "> Successfully completed the PUT operation.";
       }
     } catch (ConnectException ce) {
-      this.logger.log("Communication with the coordinator timed out during the two-phase protocol (put): " + ce.getMessage());
-      return "FAIL: the connection timed out. Please try again";
+      this.logger.log("> Error: Communication with the coordinator timed out during the two-phase protocol (put): " + ce.getMessage());
+      return "> Error: the connection timed out. Please try again";
     } catch (RemoteException re) {
-      this.logger.log("RMI failure occurred during the two-phase protocol (put): " + re.getMessage());
-      return "FAIL: RMI failure. Please try again";
+      this.logger.log("> Error: RMI failure occurred during the two-phase protocol (put): " + re.getMessage());
+      return "> Error: RMI failure. Please try again";
     }
   }
 
@@ -176,10 +178,10 @@ public class Server extends UnicastRemoteObject implements IServer, ServerServic
     String translation;
     if (this.dictionary.containsKey(key)) {
       translation = this.dictionary.get(key);
-      this.logger.log("SUCCESS: returned the value \"" + translation + "\" associated with \"" + key + "\"");
+      this.logger.log("> Returned the value \"" + translation + "\" associated with \"" + key + "\"");
     } else { // if the key doesn't exist
-      translation = "FAIL: I don't know the translation for " + "\"" + key + "\"" + " yet";
-      this.logger.log("FAIL: no value is associated with \"" + key + "\"");
+      translation = "> Error: Unknown operation for " + "\"" + key + "\"" + " yet";
+      this.logger.log("> Error: no value is associated with \"" + key + "\"");
     }
     return translation;
   }
@@ -195,16 +197,16 @@ public class Server extends UnicastRemoteObject implements IServer, ServerServic
   public String delete(String key) throws RemoteException {
     try {
       if (!this.coordinator.prepareTransaction("DELETE", key)) {
-        return "FAIL: " + "\"" + key + "\" does not exist or the transaction aborted";
+        return "> Error: " + "\"" + key + "\" does not exist or the transaction aborted";
       } else {
-        return "SUCCESS";
+        return "> Successfully completed the DELETE operation.";
       }
     } catch (ConnectException ce) {
-      this.logger.log("Communication with the coordinator timed out during the two-phase protocol (delete): " + ce.getMessage());
-      return "FAIL: the connection timed out. Please try again";
+      this.logger.log("> Communication with the coordinator timed out during the two-phase protocol (delete): " + ce.getMessage());
+      return "> Error: the connection timed out. Please try again";
     } catch (RemoteException re) {
-      this.logger.log("RMI failure occurred during the two-phase protocol (delete): " + re.getMessage());
-      return "FAIL: RMI failure. Please try again";
+      this.logger.log("> RMI failure occurred during the two-phase protocol (delete): " + re.getMessage());
+      return "> Error: RMI failure. Please try again";
     }
   }
 
@@ -251,9 +253,9 @@ public class Server extends UnicastRemoteObject implements IServer, ServerServic
     try {
       this.coordinator.shutdown(this.registry);
     } catch (ConnectException ce) {
-      this.logger.log("Communication with the coordinator timed out during the shutdown process: " + ce.getMessage());
+      this.logger.log("> Communication with the coordinator timed out during the shutdown process: " + ce.getMessage());
     } catch (RemoteException e) {
-      this.logger.log("RMI failure during the shutdown process: " + e.getMessage());
+      this.logger.log("> Error: RMI failure during the shutdown process: " + e.getMessage());
     }
   }
 
@@ -265,13 +267,13 @@ public class Server extends UnicastRemoteObject implements IServer, ServerServic
    */
   @Override
   public void shutdown(Registry registry) throws RemoteException {
-    this.logger.log("Received a request to shut down...");
+    this.logger.log("> Received a request to shut down...");
     System.out.println(this + " is shutting down...");
     try {
       registry.unbind("ServerService"); // unbind the remote object from the custom name
       this.logger.log(this + " unbound in registry");
     } catch (NotBoundException e) {
-      this.logger.log("Unbind error: " + e.getMessage());
+      this.logger.log("> Unbind error: " + e.getMessage());
       e.printStackTrace();
       System.exit(1);
     }
@@ -284,6 +286,6 @@ public class Server extends UnicastRemoteObject implements IServer, ServerServic
 
   @Override
   public String toString() {
-    return "Server at port " + this.port;
+    return "> Server at port " + this.port;
   }
 }
