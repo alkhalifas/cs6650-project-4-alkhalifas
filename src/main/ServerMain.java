@@ -59,7 +59,9 @@ public class ServerMain {
             );
 
             // Print a message indicating that all servers are provisioned and ready
-            System.out.println("> All 5 servers are provisioned and ready");
+            System.out.println("##########################################");
+            System.out.println("> All 5 servers are provisioned and ready! ");
+            System.out.println("##########################################");
         } catch (RemoteException e) {
             // Handle RemoteException gracefully
             System.err.println("> Error: RMI failure in ServerMain: " + e.getMessage());

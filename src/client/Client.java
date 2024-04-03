@@ -100,33 +100,55 @@ public class Client implements IClient {
     @Override
     public void prePopulate() {
         try {
-            this.logger.log("Pre-populating...");
-            System.out.println("Pre-populating...");
-            // Pre-populating key-value pairs
+            this.logger.log("> Pre-populating the KV store");
+            System.out.println("> Pre-populating the KV store");
+
+            // PUT operations
             System.out.println(this.server.put("name", "saleh"));
-            System.out.println(this.server.put("color", "blue"));
-            System.out.println(this.server.put("thank you", "grazie"));
-            System.out.println(this.server.put("please", "per favore"));
-            System.out.println(this.server.put("yes", "sì"));
-            System.out.println(this.server.put("no", "no"));
-            System.out.println(this.server.put("water", "acqua"));
-            System.out.println(this.server.put("food", "cibo"));
-            System.out.println(this.server.put("friend", "amico"));
-            System.out.println(this.server.put("love", "amore"));
-            this.logger.log("Pre-population completed");
-            System.out.println("Pre-population completed");
+            System.out.println(this.server.put("city", "boston"));
+            System.out.println(this.server.put("language", "arabic"));
+            System.out.println(this.server.put("food", "biryani"));
+            System.out.println(this.server.put("drink", "coffee"));
+            System.out.println(this.server.put("company", "amgen"));
+            System.out.println(this.server.put("laptop", "macbook"));
+            System.out.println(this.server.put("job", "scientist"));
+            System.out.println(this.server.put("car", "nissan"));
+
+            // Wait a bit between operations
+            Thread.sleep(500);
+
+            // GET operations
+            System.out.println(this.server.get("name"));
+            System.out.println(this.server.get("city"));
+            System.out.println(this.server.get("language"));
+            System.out.println(this.server.get("food"));
+            System.out.println(this.server.get("drink"));
+
+            // Wait a bit between operations
+            Thread.sleep(500);
+
+            // DELETE operations
+            System.out.println(this.server.delete("name"));
+            System.out.println(this.server.delete("city"));
+            System.out.println(this.server.delete("language"));
+            System.out.println(this.server.delete("food"));
+            System.out.println(this.server.delete("drink"));
+
+
+            this.logger.log("> Pre-population of KV store completed");
+            System.out.println("> Pre-population of KV store completed");
             Thread.sleep(1000); // wait a second before user interaction
 
 
         } catch (ConnectException ce) { // connection times out
-            this.logger.log("ServerService timed out (pre-populate): " + ce.getMessage());
-            System.err.println("ServerService timed out (pre-populate): " + ce.getMessage());
+            this.logger.log("> ServerService timed out (pre-populate): " + ce.getMessage());
+            System.err.println("> ServerService timed out (pre-populate): " + ce.getMessage());
         } catch (RemoteException re) { // RMI failure
-            this.logger.log("ServerService error (pre-populate): " + re.getMessage());
-            System.err.println("ServerService error (pre-populate): " + re.getMessage());
+            this.logger.log("> ServerService error (pre-populate): " + re.getMessage());
+            System.err.println("> ServerService error (pre-populate): " + re.getMessage());
         } catch (InterruptedException ie) { // thread is prematurely resumed
-            this.logger.log("Pre-population error (timeout interrupted): " + ie.getMessage());
-            System.err.println("Pre-population error (timeout interrupted): " + ie.getMessage());
+            this.logger.log("> Pre-population error (timeout interrupted): " + ie.getMessage());
+            System.err.println("> Pre-population error (timeout interrupted): " + ie.getMessage());
         }
     }
 

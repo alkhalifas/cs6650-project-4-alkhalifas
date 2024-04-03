@@ -67,13 +67,6 @@ public class Server extends UnicastRemoteObject implements IServer, ServerServic
     }
   }
 
-//   Simulates an abort scenario by generating a random number between 0 and 100 and comparing it against the "abort number".
-//  private void simulateAbort() {
-//    Random random = new Random();
-//    int randomNumber = random.nextInt(randomNumBound);
-//    this.logger.log("The random number is: " + randomNumber);
-//    this.canCommit = randomNumber != abortNumber;
-//  }
 
   /**
    * Performs the first phase of the two-phase commit protocol.
@@ -91,13 +84,11 @@ public class Server extends UnicastRemoteObject implements IServer, ServerServic
         this.logger.log("> Error: the put operation for \"" + key + "\" already exists");
       } else {
         this.canCommit = true;
-//        this.simulateAbort(); // 1/101 chances to abort
       }
     } else if (operation.equals("DELETE")) {
       if (this.dictionary.containsKey(key)) {
         this.canCommit = true;
-//        this.simulateAbort(); // 1/101 chances to abort
-      } else { // if the key doesn't exist
+      } else {
         this.canCommit = false; // abort
         this.logger.log("> Error: " + "\"" + key + "\" does not exist");
       }
