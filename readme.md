@@ -52,14 +52,14 @@
 
 ### Instructions:
 
-There are three methods to run the code for your convenience.
+There are two methods to run the code for your convenience.
 
 #### 1. Quick Start:
 
 Compile the Java code:
 
     cd src
-    coordinator/*.java server/*.java utils/*.java main/ServerMain.java
+    server/*.java utils/*.java main/ServerMain.java coordinator/*.java
     client/*.java utils/*.java main/ClientMain.java
 
 Run the Server:
