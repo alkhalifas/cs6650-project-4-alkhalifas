@@ -57,17 +57,18 @@ There are three methods to run the code for your convenience.
 Compile the Java code:
 
     cd src
-    javac server/*.java client/*.java
+    coordinator/*.java server/*.java utils/*.java main/ServerMain.java
+    client/*.java utils/*.java main/ClientMain.java
 
 Run the Server:
 
     cd src
-    java server.ServerApp
+    java main.ServerMain
 
 Run the Client:
 
     cd src
-    java client.ClientApp localhost 1099
+    java main.ClientMain
 
 #### 2. Quick Start Scripts (No Docker):
 
@@ -79,34 +80,20 @@ Alternatively, you can run the .sh files instead:
     chmod +x run_client_no_docker.sh
     ./run_client_no_docker.sh
 
-#### 3. Quick Start Scripts (With Docker):
-
-    cd src
-    sudo ./deploy.sh
-    sudo docker build -t project-2-client-image --target client-build .
-
-    sudo ./run_client.sh project-2-client-container 1099
-
-
 ### Screen Shots:
 
-Starting the Client:
-![Starting Server](artifacts/client_start_log.png "Client Start")
+Class Diagram:
+![Class Diagram](artifacts/class_diagram.png "Class Diagram")
 
-Starting the Server:
-![Client Start](artifacts/server_start_log.png "Server Start")
+Starting Client:
+![Client Start](artifacts/client_start.png "Client Start")
+
+Starting Server:
+![Client End](artifacts/server_start.png "Server Start")
 
 Client Logs:
-![Client End](artifacts/client_logs.png "Client Logs")
-
-Server Logs:
-![Server Logs](artifacts/server_logs.png "Server Logs")
+![Client Logs](artifacts/client_log.png "Client Logs")
 
 Docker Containers:
-![Server Logs](artifacts/docker_containers.png "Docker Containers")
+![Server Logs](artifacts/server_log.png "Server Logs")
 
-Docker Server Logs:
-![Docker Server Logs](artifacts/server_docker_logs.png "Docker Server Logs")
-
-Docker Client Logs:
-![Docker Client Logs](artifacts/client_docker_logs.png "Docker Client Logs")

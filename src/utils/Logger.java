@@ -13,13 +13,8 @@ import java.util.logging.SimpleFormatter;
  * various projects needing file-based logging with a uniform timestamp format.
  */
 public class Logger implements ILogger {
-  // Logger instance from java.util.logging
   private java.util.logging.Logger logger;
-
-  // FileHandler for writing logs to a specified file
   private FileHandler fileHandler;
-
-  // Format for timestamp in log messages
   private static final String format = "MM-dd-yyyy HH:mm:ss.SSS";
 
   /**
@@ -43,10 +38,16 @@ public class Logger implements ILogger {
   private void createLog(String loggerName, String logFileName) {
     this.logger = java.util.logging.Logger.getLogger(loggerName);
     try {
-      // Initializes FileHandler to write to the specified file, appending messages.
-      this.fileHandler = new FileHandler(logFileName, true);
+      String directoryPath = "logs";
+      java.io.File directory = new java.io.File(directoryPath);
+      if (!directory.exists()) {
+        directory.mkdirs();
+      }
 
-      // Sets a custom formatter to prepend a millisecond-precision timestamp to log messages.
+      String fullPath = directoryPath + java.io.File.separator + logFileName;
+
+      this.fileHandler = new FileHandler(fullPath, true);
+
       this.fileHandler.setFormatter(new SimpleFormatter() {
         @Override
         public String format(LogRecord record) {
@@ -57,7 +58,6 @@ public class Logger implements ILogger {
 
       this.logger.addHandler(this.fileHandler);
     } catch (IOException e) {
-      // Fallback error handling prints initialization errors to standard error stream.
       SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Logger.format);
       System.err.println(simpleDateFormat.format(System.currentTimeMillis()) + " - " + e.getMessage());
       e.printStackTrace();
