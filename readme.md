@@ -52,7 +52,7 @@
 
 ### Instructions:
 
-There are two methods to run the code for your convenience. The first is the command line. The second is a script that will provision everything. Five separate servers are provisioned per the specification. The client will interact with the servers randomly and dynamically, mimicking a real world scenario. Interactions are RPC-based, and the client will populate the KV store will preliminary data. This offers consistency since any interaction will be with a server at random, per the TAs recommendation. A two phase protocol is implemented, with timeouts just in case. Everything is eventually logged and persisted in the logs directory. A class diagram is provided to showcase the architecture.  
+There are two methods to run the code for your convenience. The first is the command line. The second is a script that will provision everything. Five separate servers are provisioned per the specification. The client will interact with the servers randomly and dynamically, mimicking a real world scenario. Interactions are RPC-based, and the client will populate the KV store will preliminary data. This offers consistency since any interaction will be with a server at random, per the TAs recommendation. A two phase protocol is implemented, with timeouts just in case. Everything is eventually logged and persisted in the logs directory. A class diagram is provided to showcase the architecture. If running multiple times, please delete the logs directory (I did not automate this on purpose) to have a fresh start.
 
 #### 1. Quick Start:
 
