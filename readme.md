@@ -13,6 +13,8 @@
 - [X] We will assume no servers will fail such that 2 Phase Commit will not stall
 - [X] Although you may want to defensively code your 2PC protocol with timeouts to be sure.
 - [X] Consequently, whenever a client issues a PUT or a DELETE to *any* server replica, that receiving replica will ensure the updates have been received (via ACKs) and commited (via Go messages with accompanying ACKs).
+
+
 ### Project 1 & 2 Remaining Requirements:
 - [x] You need to enable your client and server to communicate using Remote Procedure Calls (RPC) instead of sockets
 - [x] If you’ve implemented Project #1 in Java, you may want to look into and leverage Java RMI for RPC communication
