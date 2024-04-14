@@ -1,8 +1,24 @@
-# Project 3: Multi-threaded Key-Value Store using RPC
+# Project 4: Multi-threaded Key-Value Store using RPC
 ### CS 6650 Northeastern University
 ### Spring 2024
 
-### Project 3 New Requirements:
+### Project 4 New Requirements:
+- [ ] integrate the capability to ensure continual operation of your KV-store despite replica failures
+- [ ] implement Paxos to realize fault-tolerant consensus amongst your replicated servers
+- [ ] must implement and integrate the Paxos roles we described in class, and as described in the Lamport papers
+- [ ] including the Proposers, Acceptors, and Learners
+- [ ] focus on the Paxos implementation and algorithmic steps involved in realizing consensus in event ordering
+- [ ] Client threads may generate requests to any of the replicas at any time
+- [ ] To minimize the potential for live lock, you may choose to use leader election amongst the proposers
+- [ ] acceptors must be configured to "fail" at random times
+- [ ] Each of the roles within Paxos may be implemented at threads or processes
+- [ ] at a minimum the acceptor threads should "fail" periodically
+- [ ] could be done as simply as having a timeout that kills off the thread (or returns) after some random period of time
+- [ ] A new acceptor thread could then be restarted after another delay which should resume the functions of the previous acceptor thread
+- [ ] even though it clearly won't have the same state as the previously killed thread
+- [ ] you may earn extra credit for the project if all roles are constructed to randomly fail and restart
+
+### Project 1 & 2 & 3 Remaining Requirements:
 - [X] Replicate your Key-Value Store Server across 5 distinct servers.
 - [X] to increase Server bandwidth and ensure availability, you need to replicate your key-value store at each of 5 different instances of your servers.
 - [X] Note that your client code should not have to change radically
@@ -13,9 +29,6 @@
 - [X] We will assume no servers will fail such that 2 Phase Commit will not stall
 - [X] Although you may want to defensively code your 2PC protocol with timeouts to be sure.
 - [X] Consequently, whenever a client issues a PUT or a DELETE to *any* server replica, that receiving replica will ensure the updates have been received (via ACKs) and commited (via Go messages with accompanying ACKs).
-
-
-### Project 1 & 2 Remaining Requirements:
 - [x] You need to enable your client and server to communicate using Remote Procedure Calls (RPC) instead of sockets
 - [x] If you’ve implemented Project #1 in Java, you may want to look into and leverage Java RMI for RPC communication
 - [x] You need to make your server multi-threaded such that you can handle multiple outstanding client requests at once.
@@ -43,11 +56,11 @@
 - [x] You may format the time any way you like as long as your output maintains millisecond precision
 - [x] You should use your client to pre-populate the Key-Value store with data and a set of keys.
 - [x] Once the key-value store is populated, your client must do at least five of each operation: 5 PUTs, 5 GETs, 5 DELETEs.
-- [x] Create an executive summary comprising “Assignment overview”, “technical impression”, and three use cases to apply this in practice.
-- [x] “Assignment overview” (1 paragraph, up to about 250 words) explaining what you understand to be the purpose and scope of the assignment
-- [x] “technical impression” (1–2 paragraphs, about 200–500 words) describing your experiences while carrying out the assignment.
-- [x] Provide a use case (application) 3 where you would apply this in practice.
-- [x] Attach screenshots of your testing done on your local environment.
+- [ ] Create an executive summary comprising “Assignment overview”, “technical impression”, and three use cases to apply this in practice.
+- [ ] “Assignment overview” (1 paragraph, up to about 250 words) explaining what you understand to be the purpose and scope of the assignment
+- [ ] “technical impression” (1–2 paragraphs, about 200–500 words) describing your experiences while carrying out the assignment.
+- [ ] Provide a use case (application) 3 where you would apply this in practice.
+- [ ] Attach screenshots of your testing done on your local environment.
 
 
 ### Instructions:
