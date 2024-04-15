@@ -2,7 +2,6 @@ package main;
 
 import server.IAcceptor;
 import server.ILearner;
-import server.server;
 
 public class ServerMain {
 
