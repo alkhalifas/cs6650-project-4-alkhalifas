@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
-import server.ServerService;
 import utils.ILogger;
 import utils.Logger;
 
