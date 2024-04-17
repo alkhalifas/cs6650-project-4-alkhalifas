@@ -9,15 +9,22 @@ import java.util.List;
 
 public class Server extends UnicastRemoteObject implements IProposer, IAcceptor, ILearner, IStore {
 
+    private List<IAcceptor> acceptors;
+    private List<ILearner> learners;
+
+
     public Server(long nodeId, int port, int numNodes) throws RemoteException {
 
     }
 
     public void setAcceptors(List<IAcceptor> acceptors) {
+        this.acceptors = acceptors;
+    }
 
     }
 
     public void setLearners(List<ILearner> learners) {
+        this.learners = learners;
     }
 
 
