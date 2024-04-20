@@ -101,6 +101,48 @@ public class Client implements IClient {
     }
 
     /**
+     * Pre-populates the key-value store with some default data.
+     */
+    @Override
+    public void runFiveCommandsForEach() {
+        try {
+            this.logger.log("> Running five commands for each method on database started");
+            System.out.println("> Running five commands for each method on database started");
+
+            // Examples of PUT
+            System.out.println(this.server.put("lastname", "alkhalifa"));
+            System.out.println(this.server.put("plant", "mint"));
+            System.out.println(this.server.put("university", "neu"));
+            System.out.println(this.server.put("role", "developer"));
+            System.out.println(this.server.put("job", "datascience"));
+
+            // Examples of GET
+            System.out.println(this.server.get("name"));
+            System.out.println(this.server.get("lastname"));
+            System.out.println(this.server.get("university"));
+            System.out.println(this.server.get("job"));
+            System.out.println(this.server.get("role"));
+
+            // Examples of DELTE
+            System.out.println(this.server.delete("name"));
+            System.out.println(this.server.delete("lastname"));
+            System.out.println(this.server.delete("university"));
+            System.out.println(this.server.delete("job"));
+            System.out.println(this.server.delete("role"));
+
+            this.logger.log("> Running five commands for each method on database done");
+            System.out.println("> Running five commands for each method on database done");
+            Thread.sleep(1000);
+        } catch (ConnectException ce) {
+            handleConnectionError("> Error: Connection timed out in running five commands", ce);
+        } catch (RemoteException re) {
+            handleConnectionError("> Error: Connection error in running five commands", re);
+        } catch (InterruptedException ie) {
+            handleConnectionError("> Error: Running five commands error from timeout interrupted", ie);
+        }
+    }
+
+    /**
      * Handles connection errors by logging and displaying an error message.
      *
      * @param message The error message to log and display.
@@ -213,12 +255,17 @@ public class Client implements IClient {
     public void execute() {
         boolean isRunning = true;
         this.logger.log("> Client is running...");
+
+        // Pre-populate with some data
+        this.prePopulate();
+
+        // Run the five commands for each method
+        this.runFiveCommandsForEach();
+
         while (isRunning) {
             String request = this.getRequest();
-            if ("shutdown".equalsIgnoreCase(request) || "stop".equalsIgnoreCase(request)) {
+            if ("quit".equalsIgnoreCase(request)) {
                 isRunning = false;
-            } else if ("pp".equalsIgnoreCase(request)) {
-                this.prePopulate();
             } else {
                 System.out.println(this.parseRequest(request));
             }
