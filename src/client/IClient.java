@@ -1,30 +1,27 @@
 package client;
 
 /**
- * Interface defining the behavior expected from a client.
+ * Defines client operations in a distributed system to manage and interact with a key-value store.
  */
 public interface IClient {
 
     /**
-     * Retrieves a user request.
-     *
-     * @return the user request as a string
-     */
-    String getRequest();
-
-    /**
-     * Pre-populates necessary data in KV store.
+     * Initializes the key-value store with predefined data entries for readiness and testing.
      */
     void prePopulate();
 
     /**
-     * Initiates the execution of client operations.
-     * This method typically includes the main logic of the client.
+     * Captures and returns a user input representing a request for an operation on the key-value store.
+     */
+    String getRequest();
+
+    /**
+     * Manages the execution lifecycle of the client, processing requests until a shutdown command is received.
      */
     void execute();
 
     /**
-     * Shuts down the client, performing necessary cleanup tasks.
+     * Cleans up resources and terminates the client application gracefully.
      */
     void shutdown();
 }

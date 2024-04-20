@@ -1,278 +1,263 @@
 package client;
 
+import java.net.MalformedURLException;
 import java.rmi.ConnectException;
+import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 import java.util.Scanner;
-
+import server.IStore;
 import utils.ILogger;
 import utils.Logger;
 
 /**
- * The type Client represents a client that communicates via Remote Method Invocation (RMI).
+ * The Client class manages communication with a distributed key-value store
+ * over RMI. It handles setup, command processing, and shutdown procedures.
  */
 public class Client implements IClient {
-    // Constants for the default host and ports of the servers
-    private static final String host1 = "localhost";
-    private static final int port1 = 1101;
-    private static final int port2 = 1102;
-    private static final int port3 = 1103;
-    private static final int port4 = 1104;
-    private static final int port5 = 1105;
-    // Logger configuration
-    private static final String loggerName = "ClientLogger";
-    private static final String logFileName = "ClientLog.log";
-    // Service name
-    private static final String service = "ServerService";
-    // Scanner for user input
-    private final Scanner scanner;
-    // Lists to hold server hosts and ports
-    private final List<String> replicaHosts;
-    private final List<Integer> replicaPorts;
-    // Reference to the ServerService server
-    private ServerService server;
-    // Logger instance
+
+    // Base port number to calculate other port numbers dynamically
+    private static final int BASE_PORT = 1100;
+
+    // Client logger for logging events
     private final ILogger logger;
+    private final Scanner scanner;
+    private IStore server;
 
     /**
-     * Instantiates a new Client.
+     * Constructs a Client object.
+     *
+     * @param host The hostname of the server.
+     * @param port The port number where the server is accessible.
      */
-    public Client() {
-        // Thread safe loggers
-        this.logger = new Logger(loggerName, logFileName);
-        this.scanner = new Scanner(System.in);
-        this.replicaHosts = new ArrayList<>();
-        this.replicaPorts = new ArrayList<>();
-
-        // Adding server hosts and ports to the lists
-        this.replicaHosts.add(host1);
-        this.replicaHosts.add(host1);
-        this.replicaHosts.add(host1);
-        this.replicaHosts.add(host1);
-        this.replicaHosts.add(host1);
-        this.replicaPorts.add(port1);
-        this.replicaPorts.add(port2);
-        this.replicaPorts.add(port3);
-        this.replicaPorts.add(port4);
-        this.replicaPorts.add(port5);
-
-        // Timeout mechanism
+    public Client(String host, int port) {
+        // Setting timeout properties for the RMI transport layer per specs in assignment
         System.setProperty("sun.rmi.transport.tcp.responseTimeout", "2000");
         System.setProperty("sun.rmi.transport.proxy.connectTimeout", "5000");
-        this.connectToRandomReplica(); // connect to a random server
-    }
 
-    // Connects to a random server
-    private void connectToRandomReplica() {
+        this.logger = new Logger("> Client Log", "ClientLog.log");
+        this.scanner = new Scanner(System.in);
+
+        // Prepare the RMI URL based on the host and port provided so that its dynamically made
+        String str_port = Integer.toString(port);
+        String url = "rmi://" + host + ":" + port + "/KVStore" + str_port.charAt(str_port.length() - 1);
         try {
-            Random random = new Random();
-            int randomIndex = random.nextInt(this.replicaHosts.size());
-            Registry registry = LocateRegistry.getRegistry(this.replicaHosts.get(randomIndex), this.replicaPorts.get(randomIndex)); // connect to a random server
-            this.server = (ServerService) registry.lookup(service); // look up the registry for the remote object
-            this.logger.log("> Successfully connected to server " + this.replicaHosts.get(randomIndex) + " at port " + this.replicaPorts.get(randomIndex));
-        } catch (ConnectException ce) { // connection times out
-            this.logger.log("> Error. Connection to server timed out: " + ce.getMessage());
-            System.err.println("> Error. Connection to server timed out: " + ce.getMessage());
-            this.logger.close();
-            this.scanner.close();
-            System.exit(1);
-        } catch (RemoteException re) { // registry not found
-            this.logger.log("> Error. Cannot connect to server: registry not found");
-            System.err.println("> Error. Cannot connect to server: registry not found");
-            this.logger.close();
-            this.scanner.close();
-            System.exit(1);
-        } catch (NotBoundException nbe) { // service not bound in registry
-            this.logger.log("> Error. Cannot connect to server: ServerService not bound");
-            System.err.println("> Error. Cannot connect to server: ServerService not bound");
-            this.logger.close();
-            this.scanner.close();
-            System.exit(1);
+            this.server = (IStore) Naming.lookup(url);
+        } catch (NotBoundException nbe) {
+            // Handling cases where the server is not bound in the RMI registry
+            handleInitializationError("> Error: Error connecting to node at port " + port + ": " + url, nbe);
+        } catch (MalformedURLException mue) {
+            // Handling malformed URL exceptions
+            handleInitializationError(url + " is not formatted correctly", mue);
+        } catch (ConnectException ce) {
+            // Handling connection timeout exceptions
+            handleInitializationError("> Error: The server connection timed out", ce);
+        } catch (RemoteException re) {
+            // Handling generic RMI remote exceptions
+            handleInitializationError("> Error: Not able to connect to server: registry not found", re);
         }
     }
 
     /**
-     * Pre-populates the key-value store.
+     * Handles initialization errors by logging and exiting the program.
+     *
+     * @param message The error message to log and display.
+     * @param e The exception associated with the error.
+     */
+    private void handleInitializationError(String message, Exception e) {
+        this.logger.log("> Error: " + message + " \n" + e.getMessage());
+        System.err.println("> Error: " + message + " \n" + e.getMessage());
+        this.logger.close();
+        this.scanner.close();
+        System.exit(1);
+    }
+
+    /**
+     * Pre-populates the key-value store with some default data.
      */
     @Override
     public void prePopulate() {
         try {
-            this.logger.log("> Pre-populating the KV store");
-            System.out.println("> Pre-populating the KV store");
-
-            // PUT operations
+            this.logger.log("> Pre-populating database started");
+            System.out.println("> Pre-populating database started");
+            // Example data being put into the store
             System.out.println(this.server.put("name", "saleh"));
-            System.out.println(this.server.put("city", "boston"));
-            System.out.println(this.server.put("language", "arabic"));
-            System.out.println(this.server.put("food", "biryani"));
-            System.out.println(this.server.put("drink", "coffee"));
-            System.out.println(this.server.put("company", "amgen"));
-            System.out.println(this.server.put("laptop", "macbook"));
-            System.out.println(this.server.put("job", "scientist"));
             System.out.println(this.server.put("car", "nissan"));
-
-            // Wait a bit between operations
-            Thread.sleep(500);
-
-            // GET operations
-            System.out.println(this.server.get("name"));
-            System.out.println(this.server.get("city"));
-            System.out.println(this.server.get("language"));
-            System.out.println(this.server.get("food"));
-            System.out.println(this.server.get("drink"));
-
-            // Wait a bit between operations
-            Thread.sleep(500);
-
-            // DELETE operations
-            System.out.println(this.server.delete("name"));
-            System.out.println(this.server.delete("city"));
-            System.out.println(this.server.delete("language"));
-            System.out.println(this.server.delete("food"));
-            System.out.println(this.server.delete("drink"));
-
-
-            // Give user feedback on the status of the KV store
-            this.logger.log("> Pre-population of KV store completed");
-            System.out.println("> Pre-population of KV store completed");
-            Thread.sleep(1000); // wait a second before user interaction
-
-
-        } catch (ConnectException ce) { // connection times out
-            this.logger.log("> ServerService timed out (pre-populate): " + ce.getMessage());
-            System.err.println("> ServerService timed out (pre-populate): " + ce.getMessage());
-        } catch (RemoteException re) { // RMI failure
-            this.logger.log("> ServerService error (pre-populate): " + re.getMessage());
-            System.err.println("> ServerService error (pre-populate): " + re.getMessage());
-        } catch (InterruptedException ie) { // thread is prematurely resumed
-            this.logger.log("> Pre-population error (timeout interrupted): " + ie.getMessage());
-            System.err.println("> Pre-population error (timeout interrupted): " + ie.getMessage());
+            System.out.println(this.server.put("city", "malden"));
+            System.out.println(this.server.put("device", "iphone"));
+            System.out.println(this.server.put("laptop", "macbook"));
+            System.out.println(this.server.put("zipcode", "02148"));
+            System.out.println(this.server.put("state", "massachusetts"));
+            this.logger.log("> Pre-populating database done");
+            System.out.println("> Pre-populating database done");
+            Thread.sleep(1000);
+        } catch (ConnectException ce) {
+            handleConnectionError("> Error: Connection timed out in pre-populate", ce);
+        } catch (RemoteException re) {
+            handleConnectionError("> Error: Connection error in pre-populate", re);
+        } catch (InterruptedException ie) {
+            handleConnectionError("> Error: Pre-population error from timeout interrupted", ie);
         }
     }
 
     /**
-     * Gets the user request.
+     * Handles connection errors by logging and displaying an error message.
      *
-     * @return the user request
+     * @param message The error message to log and display.
+     * @param e The exception associated with the error.
+     */
+    private void handleConnectionError(String message, Exception e) {
+        this.logger.log("> Error: " + message + ": " + e.getMessage());
+        System.err.println("> Error: " + message + ": " + e.getMessage());
+    }
+
+    /**
+     * Retrieves a request from the user through the command line interface.
+     *
+     * @return The command entered by the user.
      */
     @Override
     public String getRequest() {
-        System.out.print("-------------------------------------------------------------\n");
         System.out.print("> Enter operation (PUT/GET/DELETE:key:value[only with PUT]): ");
         return this.scanner.nextLine();
     }
 
-    // Parses the user request and executes the appropriate operation
+    /**
+     * Parses and executes the user request.
+     *
+     * @param request The request string to parse and execute.
+     * @return The result of the request execution.
+     */
     private String parseRequest(String request) {
-        String result;
         String[] elements = request.split(":");
-        if (elements.length < 2 || elements.length > 3) { // the protocol is not followed
-            this.logger.log("> Error: Received malformed request: " + request);
-            return "> Error: please follow the predefined protocol PUT/GET/DELETE:key:value[with PUT only] and try again";
-        } else {
-            String operation;
-            try {
-                operation = elements[0].toUpperCase(); // PUT/GET/DELETE
-            } catch (Exception e) {
-                this.logger.log("> Parsing error: invalid operation");
-                return "> Error: could not parse the operation requested. Please follow the predefined protocol PUT/GET/DELETE:key:value[with PUT only] and try again";
-            }
-            String key;
-            try {
-                key = elements[1].toLowerCase(); // word to be translated
-            } catch (Exception e) {
-                this.logger.log("> Parsing error: invalid key");
-                return "> Error: could not parse the key requested. Please follow the predefined protocol PUT/GET/DELETE:key:value[with PUT only] and try again";
-            }
-            String value;
-            try {
-                switch (operation) {
-                    case "PUT":
-                        try {
-                            value = elements[2].toLowerCase(); // word to translate
-                            this.logger.log("> Received a request to save " + "\"" + key + "\"" + " mapped to " + "\"" + value + "\"");
-                        } catch (Exception e) {
-                            this.logger.log("> Parsing error: invalid value");
-                            return "> Error: could not parse the value requested. Please follow the predefined protocol PUT/GET/DELETE:key:value[with PUT only] and try again";
-                        }
-                        result = this.server.put(key, value);
-                        break;
-                    case "GET":
-                        result = this.server.get(key);
-                        if (result.startsWith("> Error:")) {
-                            this.logger.log("> Error: Received a request to retrieve the value mapped to a nonexistent key: \"" + key + "\"");
-                        } else {
-                            this.logger.log("> Received a request to retrieve the value mapped to \"" + key + "\"");
-                        }
-                        break;
-                    case "DELETE":
-                        result = this.server.delete(key);
-                        if (result.startsWith("> Error:")) {
-                            this.logger.log("> Received a request to delete a nonexistent key-value pair associated with the key: \"" + key + "\"");
-                        } else {
-                            this.logger.log("> Received a request to delete the key-value pair associated with the key: \"" + key + "\"");
-                        }
-                        break;
-                    default: // invalid request
-                        this.logger.log("> Error: Received an invalid request: " + request);
-                        return "> Error: Invalid request. Please follow the predefined protocol PUT/GET/DELETE:key:value[with PUT only] and try again";
-                }
-            } catch (ConnectException ce) { // connection times out
-                this.logger.log("ServerService timed out: " + ce.getMessage());
-                result = "ServerService timed out: " + ce.getMessage();
-            } catch (RemoteException re) { // RMI failure
-                this.logger.log("ServerService error: " + re.getMessage());
-                result = "ServerService error: " + re.getMessage();
-            }
+        if (elements.length < 2 || elements.length > 3) {
+            return logAndReturnError("> Error: Received malformed request: " + request, "Check to make sure you follow the predefined protocol PUT/GET/DELETE:key:value[with PUT only] and try again");
         }
-        this.logger.log("Reply: " + result);
-        return result;
+        String operation;
+        String key;
+        String value;
+        try {
+            operation = elements[0].toUpperCase();
+            key = elements[1].toLowerCase();
+            switch (operation) {
+                case "PUT":
+                    if (elements.length < 3) {
+                        return logAndReturnError("Parsing error because of invalid value", "Error parsing the value requested. Please follow the predefined protocol PUT/GET/DELETE:key:value[with PUT only] and try again");
+                    }
+                    value = elements[2].toLowerCase();
+                    this.logger.log("> Received a request to save " + "\"" + key + "\"" + " mapped to " + "\"" + value + "\"");
+                    return this.server.put(key, value);
+                case "GET":
+                    return handleGetOperation(key);
+                case "DELETE":
+                    this.logger.log("> Received a request to delete the key-value pair associated with the key: \"" + key + "\"");
+                    return this.server.delete(key);
+                default:
+                    return logAndReturnError("Received an invalid request: " + request, "Invalid request, must follow predefined protocol PUT/GET/DELETE:key:value[with PUT only] and try again");
+            }
+        } catch (Exception e) {
+            return handleExceptionDuringRequest("Server error during request processing", e);
+        }
     }
 
     /**
-     * Starts the client.
+     * Logs an error and returns a formatted error message.
+     *
+     * @param logMessage The message to log.
+     * @param errorMessage The error message to return.
+     * @return The formatted error message.
+     */
+    private String logAndReturnError(String logMessage, String errorMessage) {
+        this.logger.log("> Error: " + logMessage);
+        return "> Error: " + errorMessage;
+    }
+
+    /**
+     * Handles the 'GET' operation.
+     *
+     * @param key The key for which to retrieve the value.
+     * @return The value associated with the key, or an error message.
+     */
+    private String handleGetOperation(String key) {
+        try {
+            String result = this.server.get(key);
+            if (result == null) {
+                this.logger.log("> Error: Server received a nonexistent key: \"" + key + "\"");
+                return "> Error: Error running the mapping for " + "\"" + key + "\"";
+            }
+            this.logger.log("> Received request to retrieve the value mapped to \"" + key + "\"");
+            return result;
+        } catch (ConnectException ce) {
+            return handleExceptionDuringRequest("Server timed out", ce);
+        } catch (RemoteException re) {
+            return handleExceptionDuringRequest("RMI error", re);
+        }
+    }
+
+    /**
+     * Handles exceptions that occur during request processing by logging and formatting an error message.
+     *
+     * @param message The error message to display.
+     * @param e The exception that occurred.
+     * @return A formatted error message based on the exception.
+     */
+    private String handleExceptionDuringRequest(String message, Exception e) {
+        this.logger.log("> Error: " + message + ": " + e.getMessage());
+        return "> Error: " + message + ": " + e.getMessage();
+    }
+
+    /**
+     * Main execution loop for handling user commands.
      */
     @Override
     public void execute() {
         boolean isRunning = true;
-        this.logger.log("Client is running...");
-        while (isRunning) { // keep getting user input
-            String request = this.getRequest(); // get the user request
-            if (request.equalsIgnoreCase("shutdown") || request.equalsIgnoreCase("stop")) { // if the user wants to quit
-                isRunning = false; // prepare the shutdown process
+        this.logger.log("> Client is running...");
+        while (isRunning) {
+            String request = this.getRequest();
+            if ("shutdown".equalsIgnoreCase(request) || "stop".equalsIgnoreCase(request)) {
+                isRunning = false;
+            } else if ("pp".equalsIgnoreCase(request)) {
+                this.prePopulate();
             } else {
-                System.out.println(this.parseRequest(request)); // process the request and output the result
+                System.out.println(this.parseRequest(request));
             }
         }
-        this.shutdown(); // shut down the servers and the client
+        this.shutdown();
     }
 
     /**
-     * Stops this client and the servers.
+     * Shuts down the client and all connections.
      */
     @Override
     public void shutdown() {
-        this.logger.log("Received a request to shut down...");
-        System.out.println("Client is shutting down...");
+        this.logger.log("> Received a request to shut down...");
+        System.out.println("> Client is shutting down...");
         try {
-            this.server.shutdown(); // shut down the server
-            this.logger.log("ServerService closed");
-        } catch (ConnectException ce) { // connection times out
-            this.logger.log("ServerService timed out (shutdown): " + ce.getMessage());
-            System.err.println("ServerService timed out (shutdown): " + ce.getMessage());
-        } catch (RemoteException re) { // RMI failure
-            this.logger.log("ServerService error (shutdown): " + re.getMessage());
-            System.err.println("ServerService error (shutdown): " + re.getMessage());
+            // Attempting to shut down each node
+            for (int nodeId = 0; nodeId < 5; nodeId++) {
+                int port = BASE_PORT + nodeId;
+                String str_port = Integer.toString(port);
+                String url = "rmi://localhost:" + port + "/KVStore" + str_port.charAt(str_port.length() - 1);
+                IStore node = (IStore) Naming.lookup(url);
+                node.shutdown();
+            }
+        } catch (Exception e) {
+            handleExceptionDuringShutdown(e);
         }
+        this.logger.log("> Nodes closed");
         this.scanner.close();
-        this.logger.log("Client closed");
         this.logger.close();
-        System.out.println("Client closed");
+        System.out.println("> Client closed");
+    }
+
+    /**
+     * Handles exceptions that occur during the shutdown process.
+     *
+     * @param e The exception that occurred.
+     */
+    private void handleExceptionDuringShutdown(Exception e) {
+        this.logger.log("> Error during shutdown: " + e.getMessage());
+        System.err.println("> Error during shutdown: " + e.getMessage());
     }
 }
-
