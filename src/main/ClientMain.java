@@ -27,9 +27,6 @@ public class ClientMain {
                     // Create and execuet a client with the given hostname and port.
                     Client client = new Client(args[0], portNumber);
                     client.execute();
-
-                    // todo: prepopulate
-                    // todo: run 5 commands
                 }
             }
         } catch (NumberFormatException e) {
