@@ -11,6 +11,11 @@ public interface IClient {
     void prePopulate();
 
     /**
+     * Runs five examples for eech of the PUT GET DELETE methods
+     */
+    void runFiveCommandsForEach();
+
+    /**
      * Captures and returns a user input representing a request for an operation on the key-value store.
      */
     String getRequest();
