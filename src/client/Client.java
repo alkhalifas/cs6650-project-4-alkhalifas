@@ -263,6 +263,7 @@ public class Client implements IClient {
         this.runFiveCommandsForEach();
 
         while (isRunning) {
+            System.out.println("#####################################################################");
             String request = this.getRequest();
             if ("quit".equalsIgnoreCase(request)) {
                 isRunning = false;

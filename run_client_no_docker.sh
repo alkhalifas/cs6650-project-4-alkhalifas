@@ -21,6 +21,7 @@ echo "##########################################"
 
 cd src
 rm -r client/*.class utils/*.class main/ClientMain.class
+javac client/*.java utils/*.java main/ClientMain.java
 
 
 java -cp . main.ClientMain localhost 1100
