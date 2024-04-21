@@ -103,8 +103,11 @@ Class Diagram:
 Starting Client:
 ![Client Start](artifacts/client_start.png "Client Start")
 
-Starting Client With Script:
-![Client Start](artifacts/project_intro_client.png "Script Client Start")
+Client Interactive:
+![Client Start](artifacts/client_interactive.png "Client Interactive")
+
+Client Prepopulate:
+![Client Start](artifacts/client_prepopulating.png "Client Pre-Populating")
 
 Starting Server:
 ![Client End](artifacts/server_start.png "Server Start")
