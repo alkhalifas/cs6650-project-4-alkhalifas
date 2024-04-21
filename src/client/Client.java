@@ -282,8 +282,8 @@ public class Client implements IClient {
         System.out.println("> Client is shutting down...");
         try {
             // Attempting to shut down each node
-            for (int nodeId = 0; nodeId < 5; nodeId++) {
-                int port = BASE_PORT + nodeId;
+            for (int serverId = 0; serverId < 5; serverId++) {
+                int port = BASE_PORT + serverId;
                 String str_port = Integer.toString(port);
                 String url = "rmi://localhost:" + port + "/KVStore" + str_port.charAt(str_port.length() - 1);
                 IStore node = (IStore) Naming.lookup(url);

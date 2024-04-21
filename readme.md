@@ -3,20 +3,20 @@
 ### Spring 2024
 
 ### Project 4 New Requirements:
-- [ ] integrate the capability to ensure continual operation of your KV-store despite replica failures
-- [ ] implement Paxos to realize fault-tolerant consensus amongst your replicated servers
-- [ ] must implement and integrate the Paxos roles we described in class, and as described in the Lamport papers
-- [ ] including the Proposers, Acceptors, and Learners
-- [ ] focus on the Paxos implementation and algorithmic steps involved in realizing consensus in event ordering
-- [ ] Client threads may generate requests to any of the replicas at any time
-- [ ] To minimize the potential for live lock, you may choose to use leader election amongst the proposers
-- [ ] acceptors must be configured to "fail" at random times
-- [ ] Each of the roles within Paxos may be implemented at threads or processes
-- [ ] at a minimum the acceptor threads should "fail" periodically
-- [ ] could be done as simply as having a timeout that kills off the thread (or returns) after some random period of time
-- [ ] A new acceptor thread could then be restarted after another delay which should resume the functions of the previous acceptor thread
-- [ ] even though it clearly won't have the same state as the previously killed thread
-- [ ] you may earn extra credit for the project if all roles are constructed to randomly fail and restart
+- [X] integrate the capability to ensure continual operation of your KV-store despite replica failures
+- [X] implement Paxos to realize fault-tolerant consensus amongst your replicated servers
+- [X] must implement and integrate the Paxos roles we described in class, and as described in the Lamport papers
+- [X] including the Proposers, Acceptors, and Learners
+- [X] focus on the Paxos implementation and algorithmic steps involved in realizing consensus in event ordering
+- [X] Client threads may generate requests to any of the replicas at any time
+- [X] To minimize the potential for live lock, you may choose to use leader election amongst the proposers
+- [X] acceptors must be configured to "fail" at random times
+- [X] Each of the roles within Paxos may be implemented at threads or processes
+- [X] at a minimum the acceptor threads should "fail" periodically
+- [X] could be done as simply as having a timeout that kills off the thread (or returns) after some random period of time
+- [X] A new acceptor thread could then be restarted after another delay which should resume the functions of the previous acceptor thread
+- [X] even though it clearly won't have the same state as the previously killed thread
+- [X] you may earn extra credit for the project if all roles are constructed to randomly fail and restart
 
 ### Project 1 & 2 & 3 Remaining Requirements:
 - [X] Replicate your Key-Value Store Server across 5 distinct servers.

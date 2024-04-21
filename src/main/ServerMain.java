@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import server.IAcceptor;
 import server.ILearner;
-import server.Node;
+import server.Server;
 
 /**
  * ServerMain class initializes a set of distributed nodes and configures them
@@ -24,41 +24,41 @@ public class ServerMain {
             int totalNodes = 5;
             int startingPort = 1100;
 
-            Node[] nodes = new Node[totalNodes];
+            Server[] nodes = new Server[totalNodes];
 
             // Initialize each node, create its registry, and bind it to the registry
             // todo: Check docs for better way of binding?
 
-            for (int nodeId = 0; nodeId < totalNodes; nodeId++) {
-                int port = startingPort + nodeId;
+            for (int serverId = 0; serverId < totalNodes; serverId++) {
+                int port = startingPort + serverId;
 
-                nodes[nodeId] = new Node(nodeId, port, totalNodes - 1);
+                nodes[serverId] = new Server(serverId, port, totalNodes - 1);
 
                 // Create a registry for each node on its specific port
                 Registry registry = LocateRegistry.createRegistry(port);
 
                 // Bind the node to its registry with a unique name
-                registry.rebind("KVStore" + nodeId, nodes[nodeId]);
+                registry.rebind("KVStore" + serverId, nodes[serverId]);
 
                 // Store the registry in the node for later use
-                nodes[nodeId].setRegistry(registry);
+                nodes[serverId].setRegistry(registry);
             }
 
             // Setup acceptors and learners for each node to communicate with other nodes
-            for (int nodeId = 0; nodeId < totalNodes; nodeId++) {
+            for (int serverId = 0; serverId < totalNodes; serverId++) {
                 List<IAcceptor> acceptors = new ArrayList<>(totalNodes - 1);
                 List<ILearner> learners = new ArrayList<>(totalNodes - 1);
-                for (int otherNodeId = 0; otherNodeId < totalNodes; otherNodeId++) {
-                    if (otherNodeId != nodeId) {
-                        acceptors.add(nodes[otherNodeId]);
-                        learners.add(nodes[otherNodeId]);
+                for (int otherserverId = 0; otherserverId < totalNodes; otherserverId++) {
+                    if (otherserverId != serverId) {
+                        acceptors.add(nodes[otherserverId]);
+                        learners.add(nodes[otherserverId]);
                     }
                 }
                 // Set the lists of acceptors and learners, excluding the node itself
-                nodes[nodeId].setAcceptors(acceptors);
-                nodes[nodeId].setLearners(learners);
+                nodes[serverId].setServerAcceptors(acceptors);
+                nodes[serverId].setServerLearners(learners);
             }
-            System.out.println("> Nodes ready...");
+            System.out.println("> Server is online and all nodes are ready...");
         } catch (RemoteException e) {
             // Handle RemoteException that could occur during the RMI setup
             System.err.println("> Error: The registry could not be created due to RMI error: " + e.getMessage());
