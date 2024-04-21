@@ -56,11 +56,11 @@
 - [x] You may format the time any way you like as long as your output maintains millisecond precision
 - [x] You should use your client to pre-populate the Key-Value store with data and a set of keys.
 - [x] Once the key-value store is populated, your client must do at least five of each operation: 5 PUTs, 5 GETs, 5 DELETEs.
-- [ ] Create an executive summary comprising “Assignment overview”, “technical impression”, and three use cases to apply this in practice.
-- [ ] “Assignment overview” (1 paragraph, up to about 250 words) explaining what you understand to be the purpose and scope of the assignment
-- [ ] “technical impression” (1–2 paragraphs, about 200–500 words) describing your experiences while carrying out the assignment.
-- [ ] Provide a use case (application) 3 where you would apply this in practice.
-- [ ] Attach screenshots of your testing done on your local environment.
+- [x] Create an executive summary comprising “Assignment overview”, “technical impression”, and three use cases to apply this in practice.
+- [x] “Assignment overview” (1 paragraph, up to about 250 words) explaining what you understand to be the purpose and scope of the assignment
+- [x] “technical impression” (1–2 paragraphs, about 200–500 words) describing your experiences while carrying out the assignment.
+- [x] Provide a use case (application) 3 where you would apply this in practice.
+- [x] Attach screenshots of your testing done on your local environment.
 
 
 ### Instructions:
@@ -85,6 +85,16 @@ Run the Client:
     cd src
     java main.ClientMain localhost 1100
 
+Run commands:
+
+    put:name:saleh
+    get:name
+    delete:name
+
+Close Server and Client:
+
+    quit
+
 #### 2. Quick Start Scripts (No Docker):
 
 Alternatively, you can run the .sh files instead:
@@ -94,6 +104,17 @@ Alternatively, you can run the .sh files instead:
 
     chmod +x run_client_no_docker.sh
     ./run_client_no_docker.sh
+
+
+Run commands:
+
+    put:name:saleh
+    get:name
+    delete:name
+
+Close Server and Client:
+
+    quit
 
 ### Screen Shots:
 
